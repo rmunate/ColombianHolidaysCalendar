@@ -1,0 +1,40 @@
+{
+    "name": "rmunate/calendario-colombia",
+    "description": "Control fácil del calendario de Colombia, control de festivos, fechas y manejo de días. Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP. Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.",
+    "keywords": [
+        "colombia",
+        "calendar",
+        "calendario",
+        "festivos",
+        "feriados",
+        "altum",
+        "rmunate"
+    ],
+    "homepage": "https://github.com/rmunate/PHP2JS",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rmunate\\Calendario\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Raul Mauricio Uñate Castro",
+            "email": "raulmauriciounate@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        
+    },
+    "extra" : {
+        "branch-alias" : {
+            "dev-main": "v2.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

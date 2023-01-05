@@ -1,0 +1,19 @@
+<?php
+
+use App\Services\Colombia;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration
+{
+    /*-----------------------------------*/
+    public function up(){
+        Colombia::schema()->create();
+    }
+
+    /*-----------------------------------*/
+    public function down(){
+        Colombia::schema()->drop();
+    }
+};
