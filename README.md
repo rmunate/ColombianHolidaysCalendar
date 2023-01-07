@@ -1,4 +1,4 @@
-# Calendario Colombia Laravel (2000 - 2030 Actualización de años continuamente.)
+# Calendario Festivos Colombia Laravel (2000 - 2034 Actualización de años continuamente.)
 ## _Control del Calendario de Colombia desde llamado de métodos de Clase. PHP (^7.4) en Laravel Framework._
 
 [![N|Solid](https://i.ibb.co/ZLzQTpm/Firma-Git-Hub.png)](#)
@@ -60,6 +60,7 @@ use Rmunate\Calendario\CalendarioColombia;
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
 | ``` CalendarioColombia::date('2022-03-01')->isHoliday() ``` | Retorna verdadero o falseo dependiendo si es o no festivo. |
+| ``` CalendarioColombia::date('2022-03-01')->description() ``` | Retorna el motivo que hace que el día sea festivo, en caso de no ser una fecha festiva, retorna `null`. |
 | ``` CalendarioColombia::date('2022-03-01')->isMonday() ``` | Retorna verdadero o falseo dependiendo si es o no lunes. |
 | ``` CalendarioColombia::date('2022-03-01')->isTuesday() ``` | Retorna verdadero o falseo dependiendo si es o no martes. |
 | ``` CalendarioColombia::date('2022-03-01')->isWednesday() ``` | Retorna verdadero o falseo dependiendo si es o no miercoles. |
