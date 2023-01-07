@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Services\Colombia;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Rmunate\CalendarioColombia\CalendarioColombia;
 
 class ColombianCalendarSeeder extends Seeder
 {
