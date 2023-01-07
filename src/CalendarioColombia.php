@@ -1,6 +1,6 @@
 <?php
 
-namespace Rmunate\CalendarioColombia;
+namespace Rmunate\Calendario;
 
 use DateTime;
 use Illuminate\Support\Facades\DB;

@@ -110,9 +110,9 @@ Código Migración Laravel
 ```sh
 <?php
 
-use App\Services\Colombia;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Rmunate\Calendario\CalendarioColombia;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
@@ -135,9 +135,9 @@ Codigo Seeder Laravel
 
 namespace Database\Seeders;
 
-use App\Services\Colombia;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Rmunate\Calendario\CalendarioColombia;
 
 class ColombianCalendarSeeder extends Seeder
 {
@@ -151,8 +151,8 @@ class ColombianCalendarSeeder extends Seeder
 
 - Ingeniero, Raúl Mauricio Uñate Castro
 - raulmauriciounate@gmail.com
+- (Se reciben recomendaciones y mejoras al correo electronico.)
 
 ## Open Source
 - MIT
-- (Se reciben recomendaciones y mejoras al correo electronico.)
 
