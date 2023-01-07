@@ -2842,7 +2842,7 @@ class CalendarioColombia {
     public function description(){
         if (!empty($this->query['date'])) {
             if(isset($this->descriptions[$this->query['date']])){
-                $this->response = $this->descriptions[$this->query['date']];
+                $this->response = trim($this->descriptions[$this->query['date']]);
             } else {
                 $this->response = null;
             }
