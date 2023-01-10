@@ -15,7 +15,7 @@ class CalendarioColombia {
 #--------------------------╚═════════════════════════════════╝--------------------------#
 
     /* Datos Globales de la Clase */
-    protected $yearsAvailable = "2000 - 2030 (Constantemente se irán agregando años, se recibe apoyo y observaciones al email 'raulmauriciounate@gmail.com')";
+    protected $yearsAvailable = "2000 - 2034 Availables";
     protected $timeZone;
     protected $assignedTimeZone;
     /* Atributos Para Manejo de Festivos */
