@@ -117,7 +117,7 @@ class Holidays {
     }
 
     /* Descripciones Dias Festivos */
-    public function descriptions(){
+    public static function descriptions(){
 
         return [
             '2000-01-01' => 'Año Nuevo',
