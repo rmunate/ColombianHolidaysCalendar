@@ -4,6 +4,7 @@ namespace Rmunate\Calendario;
 
 class Holidays {
     
+    /* Arreglos de Fechas Festivas */
     public static function dates(){
         
         return [

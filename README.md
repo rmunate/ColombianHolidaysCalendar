@@ -1,9 +1,9 @@
-# Calendario Festivos Colombia Laravel (2000 - 2034 Actualización de años continuamente.)
+# Libreria Calendario y Festivos Colombia Laravel (2000 - 2034 Actualización de años continuamente.)
 ## _Control del Calendario de Colombia desde llamado de métodos de Clase. PHP (^7.4) en Laravel Framework._
 
 [![N|Solid](https://i.ibb.co/ZLzQTpm/Firma-Git-Hub.png)](#)
 
-Control fácil del calendario de Colombia, control de festivos, fechas y manejo de días.
+Control fácil del calendario de Colombia, control de festivos, fechas, rangos y manejo de días.
 Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP. 
 Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.
 
@@ -11,16 +11,16 @@ Esta es una versión totalmente libre y se busca que en comunidad se mejore y se
 
 - Manipular fechas y/o rangos de fechas con las características específicas del calendario de Colombia.
 - Validar datos de fechas puntuales como festivos, domingos, nombres, datos exactos, etc.
-- Conocer los días laborales de acuerdo al estándar de nuestro país.
-- Generar colecciones con los días festivos de un mes y año especifico.
-- Generar Migraciones y Seeders en laravel con tan solo invocar la clase.
+- Conocer los días laborales de acuerdo al estándar de Colombia.
+- Generar colecciones con los días festivos de un mes y/o año especifico.
+- Generar Migraciones y Seeders en laravel con tan solo invocar un metodo de la clase.
 - Llamado estático en cualquier lugar del sistema.
 - Concatenación de métodos para fácil uso.
 - Trabaja siempre sobre la hora y fecha de Colombia sin importar la configuración del servidor.
 - Código libre y totalmente modificable.
 
 ## Instalación
-# Instalar Con Composer
+# Instalación a través de Composer
 
 ```sh
 composer require rmunate/calendario-colombia
@@ -151,7 +151,7 @@ class ColombianCalendarSeeder extends Seeder
 
 - Ingeniero, Raúl Mauricio Uñate Castro
 - raulmauriciounate@gmail.com
-- (Se reciben recomendaciones y mejoras al correo electronico.)
+- Se reciben recomendaciones y mejoras al correo electronico.
 
 ## Open Source
 - MIT
