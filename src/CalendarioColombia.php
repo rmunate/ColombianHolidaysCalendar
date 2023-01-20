@@ -44,7 +44,7 @@ class CalendarioColombia {
         $this->query['date'] = Self::$date ?? null;
         $this->query['diff'] = Self::$diff ?? null;
         /* ---- AÑOS DISPONIBLES  */
-        $THIS->yearsAvailable = array_key_first($this->holidays) . " - " . array_key_last($this->holidays) . " Availables";
+        $this->yearsAvailable = array_key_first($this->holidays) . " - " . array_key_last($this->holidays) . " Availables";
     }
 
 #--------------------------╔═════════════════════════════════╗--------------------------#
