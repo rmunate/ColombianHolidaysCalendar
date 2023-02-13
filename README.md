@@ -8,7 +8,6 @@ Es una versión destinada netamente al control de las fechas de Colombia, esta c
 Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.
 
 ## Características
-
 - Manipular fechas y/o rangos de fechas con las características específicas del calendario de Colombia.
 - Validar datos de fechas puntuales como festivos, domingos, nombres, datos exactos, etc.
 - Conocer los días laborales de acuerdo al estándar de Colombia.
@@ -22,12 +21,12 @@ Esta es una versión totalmente libre y se busca que en comunidad se mejore y se
 ## Instalación
 # Instalación a través de Composer
 
-```sh
+```console
 composer require rmunate/calendario-colombia
 ```
 
 # Llamada de Clase En Controladores
-```sh
+```php
 use Rmunate\Calendario\CalendarioColombia;
 ```
 
@@ -107,7 +106,7 @@ METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
 | ``` CalendarioColombia::schema()->seeder(); ``` | Llena la tabla colombian_calendar, con todo el calendario de colombia entre las fechas disponibles en la clase ***Este Seeder puede tomar bastante tiempo, por lo cual es aconsejable esperar y no parar el proceso de migraciones con seeder hasta que termine. ***. |
 
 Código Migración Laravel
-```sh
+```php
 <?php
 
 use Illuminate\Support\Facades\Schema;
@@ -130,7 +129,7 @@ return new class extends Migration
 ```
 
 Codigo Seeder Laravel
-```sh
+```php
 <?php
 
 namespace Database\Seeders;

@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CalendarioColombia {
+class CalendarioColombia
+{
 
 #--------------------------╔═════════════════════════════════╗--------------------------#
 #--------------------------║      ATRIBUTOS DEL OBJETO       ║--------------------------#
@@ -28,7 +29,6 @@ class CalendarioColombia {
     /* Atributos para manejo de Fecha */
     private static $date;
     private static $diff;
-
 
 #--------------------------╔═════════════════════════════════╗--------------------------#
 #--------------------------║      CONSTRUCTOR DE LA CLASE    ║--------------------------#
