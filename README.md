@@ -22,7 +22,7 @@ Esta es una versión totalmente libre y se busca que en comunidad se mejore y se
 # Instalación a través de Composer
 
 ```console
-composer require rmunate/calendario-colombia
+composer require rmunate/calendario-colombia v2.0.x-dev
 ```
 
 # Llamada de Clase En Controladores
