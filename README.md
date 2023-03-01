@@ -1,7 +1,5 @@
-# Libreria Calendario y Festivos Colombia Laravel (2000 - 2034 Actualización de años continuamente.)
-## _Control del Calendario de Colombia desde llamado de métodos de Clase. PHP (^7.4) en Laravel Framework._
-
-[![N|Solid](https://i.ibb.co/ZLzQTpm/Firma-Git-Hub.png)](#)
+# Calendario y Festivos Colombia (2000 - 2034 Actualización de años continuamente.)(LARAVEL)
+> [![Raul Mauricio Uñate Castro](https://storage.googleapis.com/lola-web/storage_apls/RecursosCompartidos/LogoGithubLibrerias.png)](#)
 
 Control fácil del calendario de Colombia, control de festivos, fechas, rangos y manejo de días.
 Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP. 
@@ -18,20 +16,14 @@ Esta es una versión totalmente libre y se busca que en comunidad se mejore y se
 - Trabaja siempre sobre la hora y fecha de Colombia sin importar la configuración del servidor.
 - Código libre y totalmente modificable.
 
-## Instalación
-# Instalación a través de Composer
+# Instalación
+## _Instalación a través de Composer_
 
 ```console
 composer require rmunate/calendario-colombia v2.0.x-dev
 ```
 
-# Llamada de Clase En Controladores
-```php
-use Rmunate\Calendario\CalendarioColombia;
-```
-
-## Métodos
-# METODOS PARA FESTIVOS
+## Metodos
 
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
@@ -54,7 +46,7 @@ use Rmunate\Calendario\CalendarioColombia;
 | ``` CalendarioColombia::holidays()->between(['2022-08-01','2022-09-01'])->include('Sabado','Domingo')->get() ``` | Retorna los días festivos entre las fechas establecidas, incluyendo solo los dias que esten en el metodo ***include***, los dias pueden ingresarse en español (todo en minusculas sin tildes) o ingles, tambien se puede usar el metodo `->values()` para reiniciar las llaves desde 0. |
 | ``` CalendarioColombia::holidays()->years([2022...]).....->include('Sabado','Domingo')->get() ``` | El metodo ***include*** tambien se puede usar con los filtros por años y/o meses al igual que el notInclude, tambien se puede usar el metodo `->values()` para reiniciar las llaves desde 0. |
 
-# METODOS PARA FECHAS
+## METODOS PARA FECHAS
 
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
@@ -90,20 +82,21 @@ use Rmunate\Calendario\CalendarioColombia;
 | ``` CalendarioColombia::date('2022-03-01')->getMonthInt() ``` | Obteber el mes en Entero. |
 | ``` CalendarioColombia::date('2022-03-01')->getYear() ``` | Obteber el número del año en Entero. |
 
-METODOS ADICIONALES
+## METODOS ADICIONALES
 
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
 | ``` CalendarioColombia::getDaysMonth(2021,12) ``` | Retorna los dias del mes correspondiente al mes y año. |
 | ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->output() ``` | Retorna la diferencia entre dos fechas, en metodo final ***output***, genera una colección con los datos descriminados, adicional, se puede pasar como parametro ***->output(...)***. cualquiera de las siguientes opciones con diferente tipo de salida (interval_years, interval_months, interval_days, interval_hours, interval_minutes, interval_seconds, days) |
 
-METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
+## METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
 
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
 | ``` CalendarioColombia::schema()->create(); ``` | Crea la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
 | ``` CalendarioColombia::schema()->drop(); ``` | Elimina la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
 | ``` CalendarioColombia::schema()->seeder(); ``` | Llena la tabla colombian_calendar, con todo el calendario de colombia entre las fechas disponibles en la clase ***Este Seeder puede tomar bastante tiempo, por lo cual es aconsejable esperar y no parar el proceso de migraciones con seeder hasta que termine. ***. |
+
 
 Código Migración Laravel
 ```php
@@ -146,12 +139,8 @@ class ColombianCalendarSeeder extends Seeder
 }
 ```
 
-## Desarrollador(es)
 
-- Ingeniero, Raúl Mauricio Uñate Castro
-- raulmauriciounate@gmail.com
-- Se reciben recomendaciones y mejoras al correo electronico.
+## Mantenedores
+- Ingeniero, Raúl Mauricio Uñate Castro (raulmauriciounate@gmail.com)
 
-## Open Source
-- MIT
-
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
