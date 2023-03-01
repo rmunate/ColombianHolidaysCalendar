@@ -35,7 +35,7 @@ class CalendarioColombia
 #--------------------------╚═════════════════════════════════╝--------------------------#
 
     public function __construct(string $timeZone = 'America/Bogota'){
-        /* ---- GESTION PORA FESTIVOS  */
+        /* ---- GESTION PARA FESTIVOS  */
         $this->timeZone = $timeZone;
         $this->assignedTimeZone = date_default_timezone_set($timeZone);
         $this->holidays = Holidays::dates();

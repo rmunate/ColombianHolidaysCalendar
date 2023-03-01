@@ -51,15 +51,15 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
-| ``` CalendarioColombia::date('2022-03-01')->isHoliday() ``` | Retorna verdadero o falseo dependiendo si es o no festivo. |
+| ``` CalendarioColombia::date('2022-03-01')->isHoliday() ``` | Retorna verdadero o falso dependiendo si es o no festivo. |
 | ``` CalendarioColombia::date('2022-03-01')->description() ``` | Retorna el motivo que hace que el día sea festivo, en caso de no ser una fecha festiva, retorna `null`. |
-| ``` CalendarioColombia::date('2022-03-01')->isMonday() ``` | Retorna verdadero o falseo dependiendo si es o no lunes. |
-| ``` CalendarioColombia::date('2022-03-01')->isTuesday() ``` | Retorna verdadero o falseo dependiendo si es o no martes. |
-| ``` CalendarioColombia::date('2022-03-01')->isWednesday() ``` | Retorna verdadero o falseo dependiendo si es o no miercoles. |
-| ``` CalendarioColombia::date('2022-03-01')->isThursday() ``` | Retorna verdadero o falseo dependiendo si es o no jueves. |
-| ``` CalendarioColombia::date('2022-03-01')->isFriday() ``` | Retorna verdadero o falseo dependiendo si es o no viernes. |
-| ``` CalendarioColombia::date('2022-03-01')->isSaturday() ``` | Retorna verdadero o falseo dependiendo si es o no sabado. |
-| ``` CalendarioColombia::date('2022-03-01')->isSunday() ``` | Retorna verdadero o falseo dependiendo si es o no domingo. |
+| ``` CalendarioColombia::date('2022-03-01')->isMonday() ``` | Retorna verdadero o falso dependiendo si es o no lunes. |
+| ``` CalendarioColombia::date('2022-03-01')->isTuesday() ``` | Retorna verdadero o falso dependiendo si es o no martes. |
+| ``` CalendarioColombia::date('2022-03-01')->isWednesday() ``` | Retorna verdadero o falso dependiendo si es o no miercoles. |
+| ``` CalendarioColombia::date('2022-03-01')->isThursday() ``` | Retorna verdadero o falso dependiendo si es o no jueves. |
+| ``` CalendarioColombia::date('2022-03-01')->isFriday() ``` | Retorna verdadero o falso dependiendo si es o no viernes. |
+| ``` CalendarioColombia::date('2022-03-01')->isSaturday() ``` | Retorna verdadero o falso dependiendo si es o no sabado. |
+| ``` CalendarioColombia::date('2022-03-01')->isSunday() ``` | Retorna verdadero o falso dependiendo si es o no domingo. |
 | ``` CalendarioColombia::date('2022-03-01')->getDayString() ``` | Retorna el numero del dia en string conservando el cero al inicio. |
 | ``` CalendarioColombia::date('2022-03-01')->getDayInt() ``` | Retorna el numero del dia en formato numero. |
 | ``` CalendarioColombia::date('2022-03-01')->getDayNumberISO() ``` | Retorna el numero del dia en formato ISO. |
@@ -98,6 +98,8 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 | ``` CalendarioColombia::schema()->drop(); ``` | Elimina la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
 | ``` CalendarioColombia::schema()->seeder(); ``` | Llena la tabla colombian_calendar, con todo el calendario de colombia entre las fechas disponibles en la clase ***Este Seeder puede tomar bastante tiempo, por lo cual es aconsejable esperar y no parar el proceso de migraciones con seeder hasta que termine. ***. |
 
+## Migraciones Y Seeders.
+Esta funcionalidad permite que la librería se encargue de cargar los datos del Calendario a una tabla de la base de datos, al ser diversos años los que se deben cargar, el procesado de los Seeder puede tomar un tiempo considerable, úselo si lo requiere teniendo en cuenta que al correr el comando `php artisan migrate` se notara demoras en el proceso.
 
 Código Migración Laravel
 ```php
