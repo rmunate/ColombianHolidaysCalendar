@@ -6,7 +6,7 @@ Es una versión destinada netamente al control de las fechas de Colombia, esta c
 Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.
 
 ## Características
-- Los años actualmente disponibles son del 2000 al 2034, estos se actualizan cada constantemente garantizando minimo 10 años a futuro, el año mas antiguo disponible en esta y en proximas versiones siempre será 2000.
+- Los años actualmente disponibles son del 2000 al 2034, estos se actualizan constantemente garantizando minimo 10 años a futuro, el año mas antiguo disponible en esta y en proximas versiones siempre será 2000.
 - Manipular fechas y/o rangos de fechas con las características específicas del calendario de Colombia.
 - Validar datos de fechas puntuales como festivos, domingos, nombres, datos exactos, etc.
 - Conocer los días laborales de acuerdo al estándar de Colombia.
