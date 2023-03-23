@@ -104,6 +104,33 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 ## Migraciones Y Seeders.
 Esta funcionalidad permite que la librería se encargue de cargar los datos del Calendario a una tabla de la base de datos, al ser diversos años los que se deben cargar, el procesado de los Seeder puede tomar un tiempo considerable, úselo si lo requiere teniendo en cuenta que al correr el comando `php artisan migrate` se notara demoras en el proceso.
 
+Ejemplo de Uso
+```php
+CalendarioColombia::diff('2023-02-01','2023-03-31')->output();
+// array:5 [▼ // app/Http/Controllers/LandingController.php:14
+//   "days" => array:7 [▼
+//     "monday" => array:2 [▶]
+//     "tuesday" => array:2 [▶]
+//     "wednesday" => array:2 [▶]
+//     "thursday" => array:2 [▶]
+//     "friday" => array:2 [▶]
+//     "saturday" => array:2 [▶]
+//     "sunday" => array:2 [▶]
+//   ]
+//   "holidays" => array:2 [▼
+//     "count" => 9
+//     "dates" => array:9 [▶]
+//   ]
+//   "calendar_days" => 59
+//   "working_days" => 50
+//   "unconditionally_intervals" => array:3 [▼
+//     "years" => 0
+//     "months" => 1
+//     "days" => 31
+//   ]
+// ]
+```
+
 Código Migración Laravel
 ```php
 <?php
