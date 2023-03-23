@@ -738,7 +738,9 @@ class CalendarioColombia
 
     /* Formato Diferencia */
     public function output(string $format = null){
+
         if (isset($this->query['diff'][0]) && $this->query['diff'][1]) {
+
             /* Validacion Diferencia */
             $datetime1 = date_create($this->query['diff'][0]);
             $datetime2 = date_create($this->query['diff'][1]);
@@ -747,14 +749,15 @@ class CalendarioColombia
 
             $this->response = (object) [
                 'interval' => (object) [
-                    'years' => $this->response->y,
-                    'months' => $this->response->m,
-                    'days' => $this->response->d,
-                    'hours' => $this->response->h,
-                    'minutes' => $this->response->i,
-                    'seconds' => $this->response->s
-                ],
-                'total_days' => $this->response->days
+                                'years' => $this->response->y,
+                                'months' => $this->response->m,
+                                'days' => $this->response->d,
+                                'hours' => $this->response->h,
+                                'minutes' => $this->response->i,
+                                'seconds' => $this->response->s
+                            ],
+                'total_days' => $this->response->days,
+                'total_days_real' => $this->response->days + 1
             ];
 
             if ($format == 'interval_years') {
@@ -769,10 +772,12 @@ class CalendarioColombia
                 $this->response = $this->response->interval->minutes;
             } else if ($format == 'interval_seconds'){
                 $this->response = $this->response->interval->seconds;
-            } else if ($format == 'days'){
+            } else if ($format == 'total_days'){
                 $this->response = $this->response->total_days;
+            } else if ($format == 'total_days_real'){
+                $this->response = $this->response->total_days_real;
             } else {
-                $this->response = collect($this->response);
+                $this->response = $this->response;
             }
 
             return $this->response;
