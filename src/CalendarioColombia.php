@@ -946,9 +946,11 @@ class CalendarioColombia
             $data['working_days'] = $data['calendar_days'] - $data['holidays']['count'];
 
             /* Depurar Dias */
-            if ($this->query['not_include_holidays']) {
-                unset($data['holidays']);
-                unset($data['working_days']);
+            if (isset($this->query['include_holidays'])){
+                if ($this->query['not_include_holidays']) {
+                    unset($data['holidays']);
+                    unset($data['working_days']);
+                }
             }
 
             /* Validacion Diferencia */
