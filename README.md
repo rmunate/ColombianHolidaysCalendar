@@ -88,7 +88,10 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
 | ``` CalendarioColombia::getDaysMonth(2021,12) ``` | Retorna los dias del mes correspondiente al mes y año. |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->output() ``` | Retorna la diferencia entre dos fechas, en metodo final ***output***, genera una colección con los datos descriminados, adicional, se puede pasar como parametro ***->output(...)***. cualquiera de las siguientes opciones con diferente tipo de salida (interval_years, interval_months, interval_days, interval_hours, interval_minutes, interval_seconds, days) |
+| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->output() ``` | Retorna la diferencia entre dos fechas, en un array con la información detallada |
+| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles. |
+| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->notIncludeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin tener en cuenta los dias festivos. |
+| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->includeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin teniendo en cuenta los dias festivos. |
 
 ## METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
 

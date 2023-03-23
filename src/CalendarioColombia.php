@@ -191,6 +191,18 @@ class CalendarioColombia
         return $this;
     }
 
+    /* Definir que no se incluyan festivos */
+    public function notIncludeHolidays(){
+        $this->query['not_include_holidays'] = true;
+        return $this;
+    }
+
+    /* Definir que no se incluyan festivos */
+    public function includeHolidays(){
+        $this->query['not_include_holidays'] = false;
+        return $this;
+    }
+
     /* Definir Dias a  incluir */
     public function include(){
         if(count(func_get_args()) > 0){
@@ -739,46 +751,182 @@ class CalendarioColombia
     /* Formato Diferencia */
     public function output(string $format = null){
 
+        /* Validacion de que exista un intervalo */
         if (isset($this->query['diff'][0]) && $this->query['diff'][1]) {
+
+            /* Invocación Clase DataTime */
+            $start = new DateTime($this->query['diff'][0]);
+            $end = new DateTime($this->query['diff'][1]);
+
+            $data = [
+                'days' => [
+                    'monday'    => ['count' => 0, 'dates' => []],
+                    'tuesday'   => ['count' => 0, 'dates' => []],
+                    'wednesday' => ['count' => 0, 'dates' => []],
+                    'thursday'  => ['count' => 0, 'dates' => []],
+                    'friday'    => ['count' => 0, 'dates' => []],
+                    'saturday'  => ['count' => 0, 'dates' => []],
+                    'sunday'    => ['count' => 0, 'dates' => []],
+                ],
+                'holidays' => [
+                    'count' => 0,
+                    'dates' => []
+                ],
+                'calendar_days' => 0,
+                'working_days' => 0,
+                'unconditionally_intervals' => []
+            ];
+
+            for($i = $start; $i <= $end; $i->modify('+1 day')){
+
+                $dateIteracion = $i->format("Y-m-d");
+                $incluir = true;
+                $isHoliday = Self::date($dateIteracion)->isHoliday();
+
+                switch (date('N', strtotime($dateIteracion))) {
+                    case 1: # Lunes
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Monday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['monday']['count']++;
+                            array_push($data['days']['monday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                    case 2: # Martes
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Tuesday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['tuesday']['count']++;
+                            array_push($data['days']['tuesday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                    case 3: # Miercoles
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Wednesday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['wednesday']['count']++;
+                            array_push($data['days']['wednesday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                    case 4: # Jueves
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Thursday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['thursday']['count']++;
+                            array_push($data['days']['thursday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                    case 5: # Viernes
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Friday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['friday']['count']++;
+                            array_push($data['days']['friday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                    case 6: # Sabado
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Saturday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['saturday']['count']++;
+                            array_push($data['days']['saturday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                    case 7: # Domingo
+                        if (isset($this->query['not_include'])) $incluir = !in_array('Sunday', $this->query['not_include']);
+                        if (isset($this->query['not_include_holidays'])){
+                            if (!$this->query['not_include_holidays'] && $isHoliday) {
+                                $data['holidays']['count']++;
+                                array_push($data['holidays']['dates'], $dateIteracion);
+                            }
+                        }
+                        if ($incluir) {
+                            $data['days']['sunday']['count']++;
+                            array_push($data['days']['sunday']['dates'], $dateIteracion);
+                            $data['calendar_days']++;
+                        }
+                        break;
+                }
+            }
+
+            /* Depurar Dias */
+            if (isset($this->query['not_include']) && in_array('Monday', $this->query['not_include'])) {
+                unset($data['days']['monday']);
+            }
+            if (isset($this->query['not_include']) && in_array('Tuesday', $this->query['not_include'])) {
+                unset($data['days']['tuesday']);
+            }
+            if (isset($this->query['not_include']) && in_array('Wednesday', $this->query['not_include'])) {
+                unset($data['days']['wednesday']);
+            }
+            if (isset($this->query['not_include']) && in_array('Thursday', $this->query['not_include'])) {
+                unset($data['days']['thursday']);
+            }
+            if (isset($this->query['not_include']) && in_array('Friday', $this->query['not_include'])) {
+                unset($data['days']['friday']);
+            }
+            if (isset($this->query['not_include']) && in_array('Saturday', $this->query['not_include'])) {
+                unset($data['days']['saturday']);
+            }
+            if (isset($this->query['not_include']) && in_array('Sunday', $this->query['not_include'])) {
+                unset($data['days']['sunday']);
+            }
+
+            /* Dias Calendario Menos Festibos */
+            $data['working_days'] = $data['calendar_days'] - $data['holidays']['count'];
+            
+            if (!isset($this->query['not_include_holidays']) || $this->query['not_include_holidays']) {
+                unset($data['days']['sunday']);
+                unset($data['holidays']);
+                unset($data['working_days']);
+            }
 
             /* Validacion Diferencia */
             $datetime1 = date_create($this->query['diff'][0]);
             $datetime2 = date_create($this->query['diff'][1]);
             $contador = date_diff($datetime1, $datetime2);
-            $this->response = $contador;
 
-            $this->response = (object) [
-                'interval' => (object) [
-                                'years' => $this->response->y,
-                                'months' => $this->response->m,
-                                'days' => $this->response->d,
-                                'hours' => $this->response->h,
-                                'minutes' => $this->response->i,
-                                'seconds' => $this->response->s
-                            ],
-                'total_days' => $this->response->days,
-                'total_days_real' => $this->response->days + 1
-            ];
+            $data['unconditionally_intervals']['years'] = $contador->y;
+            $data['unconditionally_intervals']['months'] = $contador->m;
+            $data['unconditionally_intervals']['days'] = $contador->d + 1;
 
-            if ($format == 'interval_years') {
-                $this->response = $this->response->interval->years;
-            } else if ($format == 'interval_months'){
-                $this->response = $this->response->interval->months;
-            } else if ($format == 'interval_days'){
-                $this->response = $this->response->interval->days;
-            } else if ($format == 'interval_hours'){
-                $this->response = $this->response->interval->hours;
-            } else if ($format == 'interval_minutes'){
-                $this->response = $this->response->interval->minutes;
-            } else if ($format == 'interval_seconds'){
-                $this->response = $this->response->interval->seconds;
-            } else if ($format == 'total_days'){
-                $this->response = $this->response->total_days;
-            } else if ($format == 'total_days_real'){
-                $this->response = $this->response->total_days_real;
-            } else {
-                $this->response = $this->response;
-            }
+            $this->response = $data;
 
             return $this->response;
         }
