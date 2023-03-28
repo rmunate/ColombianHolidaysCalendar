@@ -93,19 +93,9 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 | ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->notIncludeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin tener en cuenta los dias festivos. |
 | ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->includeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin teniendo en cuenta los dias festivos. |
 
-## METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
-
-|       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
-| ------ | ------ |
-| ``` CalendarioColombia::schema()->create(); ``` | Crea la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
-| ``` CalendarioColombia::schema()->drop(); ``` | Elimina la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
-| ``` CalendarioColombia::schema()->seeder(); ``` | Llena la tabla colombian_calendar, con todo el calendario de colombia entre las fechas disponibles en la clase ***Este Seeder puede tomar bastante tiempo, por lo cual es aconsejable esperar y no parar el proceso de migraciones con seeder hasta que termine. ***. |
-
-## Migraciones Y Seeders.
-Esta funcionalidad permite que la librería se encargue de cargar los datos del Calendario a una tabla de la base de datos, al ser diversos años los que se deben cargar, el procesado de los Seeder puede tomar un tiempo considerable, úselo si lo requiere teniendo en cuenta que al correr el comando `php artisan migrate` se notara demoras en el proceso.
-
 Ejemplo de Uso
 ```php
+#Emplear este metodo para guardar datos en bases de datos, evitar usarlo en Bucles.
 CalendarioColombia::diff('2023-02-01','2023-03-31')->output();
 // array:5 [▼ // app/Http/Controllers/LandingController.php:14
 //   "days" => array:7 [▼
@@ -130,6 +120,17 @@ CalendarioColombia::diff('2023-02-01','2023-03-31')->output();
 //   ]
 // ]
 ```
+
+## METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
+
+|       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
+| ------ | ------ |
+| ``` CalendarioColombia::schema()->create(); ``` | Crea la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
+| ``` CalendarioColombia::schema()->drop(); ``` | Elimina la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
+| ``` CalendarioColombia::schema()->seeder(); ``` | Llena la tabla colombian_calendar, con todo el calendario de colombia entre las fechas disponibles en la clase ***Este Seeder puede tomar bastante tiempo, por lo cual es aconsejable esperar y no parar el proceso de migraciones con seeder hasta que termine. ***. |
+
+## Migraciones Y Seeders.
+Esta funcionalidad permite que la librería se encargue de cargar los datos del Calendario a una tabla de la base de datos, al ser diversos años los que se deben cargar, el procesado de los Seeder puede tomar un tiempo considerable, úselo si lo requiere teniendo en cuenta que al correr el comando `php artisan migrate` se notara demoras en el proceso.
 
 Código Migración Laravel
 ```php
