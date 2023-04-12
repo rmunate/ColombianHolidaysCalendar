@@ -2,7 +2,7 @@
 > [![Raul Mauricio Uñate Castro](https://storage.googleapis.com/lola-web/storage_apls/RecursosCompartidos/LogoGithubLibrerias.png)](#)
 
 Control fácil del calendario de Colombia, control de festivos, fechas, rangos y manejo de días.
-Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP. 
+Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP DateTime::class(). 
 Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.
 
 ## Características
@@ -88,10 +88,11 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
 | ``` CalendarioColombia::getDaysMonth(2021,12) ``` | Retorna los dias del mes correspondiente al mes y año. |
+| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->interval() ``` | Retorna los intervalos de Diferencia. |
 | ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->output() ``` | Retorna la diferencia entre dos fechas, en un array con la información detallada |
 | ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles. |
 | ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->notIncludeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin tener en cuenta los dias festivos. |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->includeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin teniendo en cuenta los dias festivos. |
+| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->include('sabado',...)->includeHolidays()->output() ``` | Retorna la diferencia entre dos fechas teniendo en cuenta el dia o los dias ingresados en el metodo `->include()` los dias pueden estar en español o ingles y teniendo en cuenta los dias festivos. |
 
 Ejemplo de Uso
 ```php
