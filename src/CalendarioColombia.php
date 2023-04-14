@@ -308,6 +308,12 @@ class CalendarioColombia
 #--------------------------╚═════════════════════════════════╝--------------------------#
 
     /* Acciones Por Dias */
+    public static function now(){
+        Self::$date = date('Y-m-d');
+        return new static();
+    }
+
+    /* Acciones Por Dias */
     public static function date(string $date = null){
         Self::$date = !empty($date) ? date('Y-m-d', strtotime($date)) : date('Y-m-d');
         return new static();
