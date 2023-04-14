@@ -51,6 +51,7 @@ composer require rmunate/calendario-colombia v2.0.x-dev
 
 |       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
 | ------ | ------ |
+| ``` CalendarioColombia::date()->....() ``` | Se puede inicializar sin fecha y toma la fecha actual. |
 | ``` CalendarioColombia::date('2022-03-01')->isHoliday() ``` | Retorna verdadero o falso dependiendo si es o no festivo. |
 | ``` CalendarioColombia::date('2022-03-01')->description() ``` | Retorna el motivo que hace que el día sea festivo, en caso de no ser una fecha festiva, retorna `null`. |
 | ``` CalendarioColombia::date('2022-03-01')->isMonday() ``` | Retorna verdadero o falso dependiendo si es o no lunes. |
