@@ -38,8 +38,8 @@ class CalendarioColombia
         /* ---- GESTION PARA FESTIVOS  */
         $this->timeZone = $timeZone;
         $this->assignedTimeZone = date_default_timezone_set($timeZone);
-        $this->holidays = Holidays::dates();
-        $this->descriptions = Holidays::descriptions();
+        $this->holidays = HolidaysOld::dates();
+        $this->descriptions = HolidaysOld::descriptions();
         /* ---- GESTION POR DIAS  */
         $this->query['date'] = Self::$date ?? null;
         $this->query['diff'] = Self::$diff ?? null;
@@ -814,7 +814,7 @@ class CalendarioColombia
             }
 
             /* Festivos */
-            $festivos = Holidays::descriptions();
+            $festivos = HolidaysOld::descriptions();
             
             for($i = $start; $i <= $end; $i->modify('+1 day')){
 
