@@ -14,9 +14,8 @@ abstract class BaseCountry
      * @return Collection
      */
     public static function get(string $country)
-    {
-        $country = new static();
-        
-        return Collection::make($country->{$country}());
+    {   
+        $country = lcfirst(str_replace("-", "", $country));
+        return Collection::make((new static())->{$country}());
     }
 }
