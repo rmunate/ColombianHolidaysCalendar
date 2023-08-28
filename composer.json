@@ -1,5 +1,5 @@
 {
-    "name": "rmunate/colombian-calendar",
+    "name": "rmunate/calendario-colombia",
     "description": "Control fácil del Calendario de Colombia, control de festivos, fechas y manejo de días. Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP. Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.",
     "keywords": [
         "colombia",
@@ -27,7 +27,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "rmunate/laravel-config-runtime": "^1.0",
-        "require rmunate/php-config-runtime": "^1.0",
+        "rmunate/php-config-runtime": "^1.0",
         "nesbot/carbon": "^2.0",
         "illuminate/support": "^8.0|^9.0|^10.0"
     },
