@@ -7,6 +7,8 @@ Este paquete cuenta con la capacidad de permitirte trabajar con las fechas festi
 [![Laravel 9.0+](https://img.shields.io/badge/Laravel-9.0%2B-orange.svg)](https://laravel.com)
 [![Laravel 10.0+](https://img.shields.io/badge/Laravel-10.0%2B-orange.svg)](https://laravel.com)
 
+![CALENDARIO-COLOMBIA](https://github.com/rmunate/ColombianCalendar/assets/91748598/7b142af1-9f18-453d-a772-8157df688cb7)
+
 📖 [**DOCUMENTACIÓN EN INGLES**](README_ENGLISH.md) 📖
 
 ## Tabla de Contenido
