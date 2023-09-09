@@ -82,7 +82,7 @@ trait CalendarStatic
      * @param string $country The name of the country (default is 'Colombia').
      * @return Holidays The Holidays instance for the specified country.
      */
-    public static function holidays($country = 'Colombia')
+    public static function onlyHolidays($country = 'Colombia')
     {
         return Holidays::country($country);
     }

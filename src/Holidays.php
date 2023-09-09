@@ -117,9 +117,7 @@ final class Holidays extends BaseHolidays
         $daysArray = [];
         foreach ($days as $value) {
             $name = $this->spanishToEnglishDay($value);
-            if ($name !== null) {
-                array_push($daysArray, $name);
-            }
+            array_push($daysArray, ($name !== null) ? $name : $value);
         }
 
         $this->response = $this->query()->whereNotIn('day_name', $daysArray)->values();
@@ -137,9 +135,7 @@ final class Holidays extends BaseHolidays
         $daysArray = [];
         foreach ($days as $value) {
             $name = $this->spanishToEnglishDay($value);
-            if ($name !== null) {
-                array_push($daysArray, $name);
-            }
+            array_push($daysArray, ($name !== null) ? $name : $value);
         }
 
         $this->response = $this->query()->whereNotIn('day_name', $daysArray)->values();
@@ -157,9 +153,7 @@ final class Holidays extends BaseHolidays
         $daysArray = [];
         foreach ($days as $value) {
             $name = $this->spanishToEnglishDay($value);
-            if ($name !== null) {
-                array_push($daysArray, $name);
-            }
+            array_push($daysArray, ($name !== null) ? $name : $value);
         }
 
         $this->response = $this->query()->whereIn('day_name', $daysArray)->values();
@@ -177,9 +171,7 @@ final class Holidays extends BaseHolidays
         $daysArray = [];
         foreach ($days as $value) {
             $name = $this->spanishToEnglishDay($value);
-            if ($name !== null) {
-                array_push($daysArray, $name);
-            }
+            array_push($daysArray, ($name !== null) ? $name : $value);
         }
 
         $this->response = $this->query()->whereIn('day_name', $daysArray)->values();

@@ -1,182 +1,354 @@
-# Calendario y Festivos Colombia (LARAVEL)
-> [![Raul Mauricio Uñate Castro](https://storage.googleapis.com/lola-web/storage_apls/RecursosCompartidos/LogoGithubLibrerias.png)](#)
+# Calendario de Festivos Colombia
 
-Control fácil del calendario de Colombia, control de festivos, fechas, rangos y manejo de días.
-Es una versión destinada netamente al control de las fechas de Colombia, esta clase al igual que la clase Carbon, se hereda de metodos y clases originales de PHP DateTime::class(). 
-Esta es una versión totalmente libre y se busca que en comunidad se mejore y se brinde mejores métodos y opciones para los programadores que deciden usarla.
+Este paquete cuenta con la capacidad de permitirte trabajar con las fechas festivas de Colombia. Con el uso de dos clases, podrás lograr resultados increíbles en tus proyectos. Seguramente te será de utilidad para proyectos donde requieras validar si una fecha es festiva, si un año es bisiesto, cuántos festivos existen entre un rango de fechas y mucho más. Este paquete cuenta actualmente con soporte desde el año 2000 hasta el 2034. Cada año iremos agregando más años, nuestro compromiso es que siempre cuentes con la información de al menos 10 años a futuro.
 
-## Características
-- Los años actualmente disponibles son del 2000 al 2034, estos se actualizan constantemente garantizando minimo 10 años a futuro, el año mas antiguo disponible en esta y en proximas versiones siempre será 2000.
-- Manipular fechas y/o rangos de fechas con las características específicas del calendario de Colombia.
-- Validar datos de fechas puntuales como festivos, domingos, nombres, datos exactos, etc.
-- Conocer los días laborales de acuerdo al estándar de Colombia.
-- Generar colecciones con los días festivos de un mes y/o año especifico.
-- Generar Migraciones y Seeders en laravel con tan solo invocar un metodo de la clase.
-- Llamado estático en cualquier lugar del sistema.
-- Concatenación de métodos para fácil uso.
-- Trabaja siempre sobre la hora y fecha de Colombia sin importar la configuración del servidor.
-- Código libre y totalmente modificable.
+⚙️ Esta librería es compatible con Laravel 9.0 y versiones posteriores ⚙️
 
-# Instalación
-## _Instalación a través de Composer_
+[![Laravel 9.0+](https://img.shields.io/badge/Laravel-9.0%2B-orange.svg)](https://laravel.com)
+[![Laravel 10.0+](https://img.shields.io/badge/Laravel-10.0%2B-orange.svg)](https://laravel.com)
 
-```console
-composer require rmunate/calendario-colombia v2.0.x-dev
+📖 [**DOCUMENTACIÓN EN INGLES**](README_ENGLISH.md) 📖
+
+## Tabla de Contenido
+- [Introducción](#introducción)
+- [Instalación](#instalación)
+- [Uso de la Clase **Calendar**](#uso-de-la-clase-calendar)
+  - [Método `today()`](#método-today)
+  - [Método `date()`](#método-date)
+  - [Método `timeZone()`](#método-timezone)
+  - [Métodos de Asignación Encadenados](#métodos-de-asignación-encadenados)
+  - [Métodos de Manipulación de Fechas](#métodos-de-manipulación-de-fechas)
+  - [Métodos Directos](#métodos-directos)
+  - [Métodos para Calcular Diferencias de Fechas](#métodos-para-calcular-diferencias-de-fechas)
+- [Uso de la Clase **Holidays**](#uso-de-la-clase-holidays)
+  - [Métodos Disponibles para Trabajar con Festivos](#métodos-disponibles-para-trabajar-con-festivos)
+- [Creador](#creador)
+- [Licencia](#licencia)
+
+## Introducción
+Este paquete cuenta con dos clases de acceso a los métodos. La clase `Calendar` permitirá que trabajes con las fechas ejecutando tareas de trabajo de rangos, aumentos, disminuciones y muchas otras tareas útiles. La clase `Holidays` te permitirá trabajar de manera exclusiva con las fechas festivas. El paquete actualmente solo cuenta con soporte para Colombia.
+
+## Instalación
+Para instalar la dependencia a través de **Composer**, ejecuta el siguiente comando:
+
+```shell
+composer require rmunate/calendario-colombia
 ```
 
-## Metodos
+## Uso de la Clase **Calendar**
+Para poder emplear los diferentes métodos disponibles en la clase, podrás inicializar su uso de tres formas diferentes:
 
-|       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
-| ------ | ------ |
-| ``` CalendarioColombia::timezone() ``` | Setea la Zona de Tiempo De Bogota Colombia al sistema. |
-| ``` CalendarioColombia::holidays() ``` | Este método retorna la clase completa, donde se puede visualisar los años con data disponible en la propiedad privada ***holidays***. |
-| ``` CalendarioColombia::holidays()->all() ``` | Este método retorna la colección completa de días festivos sin agruparlos. |
-| ``` CalendarioColombia::holidays()->year(2020)->get() ``` | Este método retorna la colección completa de días festivos del año ingresado en ***year*** y generando la colección con el metodo ***->get()***. |
-| ``` CalendarioColombia::holidays()->year(2020)->get()->values() ``` | Este método retorna la colección completa de días festivos del año ingresado en ***year*** y generando la colección con el metodo ***->get()*** iniciando las llaves desde el 0. |
-| ``` CalendarioColombia::holidays()->years([2020,2021])->get() ``` | Este método retorna la colección completa de los días festivos de los años ingresado en ***years*** y generando la colección con el metodo ***->get()***. |
-| ``` CalendarioColombia::holidays()->years([2020,2021])->get()->values() ``` | Este método retorna la colección completa de los días festivos de los años ingresado en ***years*** y generando la colección con el metodo ***->get()*** iniciando las llaves desde el 0. |
-| ``` CalendarioColombia::holidays()->year(2020)->month(8)->get() ``` | Este método retorna la colección completa de días festivos del año ingresado en ***year*** y del mes ingresado en ***month*** generando la colección con el metodo ***->get()***. |
-| ``` CalendarioColombia::holidays()->year(2020)->month(8)->get()->values() ``` | Este método retorna la colección completa de días festivos del año ingresado en ***year*** y del mes ingresado en ***month*** generando la colección con el metodo ***->get()*** iniciando las llaves desde el 0. |
-| ``` CalendarioColombia::holidays()->years([2020,2021])->months([8,9])->get() ``` | Este método retorna la colección completa de días festivos de los años ingresados en ***years*** y de los meses ingresados en ***months*** generando la colección con el metodo ***->get()***. |
-| ``` CalendarioColombia::holidays()->years([2020,2021])->months([8,9])->get()->values() ``` | Este método retorna la colección completa de días festivos de los años ingresados en ***years*** y de los meses ingresados en ***months*** generando la colección con el metodo ***->get()*** iniciando las llaves desde el 0. |
-| ``` CalendarioColombia::holidays()->between(['2022-08-01','2022-09-01'])->get() ``` | Retorna los días festivos entre las fechas establecidas. |
-| ``` CalendarioColombia::holidays()->between(['2022-08-01','2022-09-01'])->get()->values() ``` | Retorna los días festivos entre las fechas establecidas iniciando las llaves en 0. |
-| ``` CalendarioColombia::holidays()->between(['2022-08-01','2022-09-01'])->notInclude('Sabado','Domingo')->get() ``` | Retorna los días festivos entre las fechas establecidas, sin incluir los dias que esten en el metodo ***notInclude***, los dias pueden ingresarse en español (todo en minusculas sin tildes) o ingles. |
-| ``` CalendarioColombia::holidays()->between(['2022-08-01','2022-09-01'])->notInclude('Sabado','Domingo')->get()->values() ``` | Retorna los días festivos entre las fechas establecidas, sin incluir los dias que esten en el metodo ***notInclude***, los dias pueden ingresarse en español (todo en minusculas sin tildes) o ingles. Reiniciando las llaves desde 0. |
-| ``` CalendarioColombia::holidays()->years([2020,2021])->months([8,9])->notInclude('Sabado','Domingo')->get() ``` | El metodo ***notInclude*** tambien se puede usar con los filtros por años y/o meses, tambien se puede usar el metodo `->values()` para reiniciar las llaves desde 0. |
-| ``` CalendarioColombia::holidays()->between(['2022-08-01','2022-09-01'])->include('Sabado','Domingo')->get() ``` | Retorna los días festivos entre las fechas establecidas, incluyendo solo los dias que esten en el metodo ***include***, los dias pueden ingresarse en español (todo en minusculas sin tildes) o ingles, tambien se puede usar el metodo `->values()` para reiniciar las llaves desde 0. |
-| ``` CalendarioColombia::holidays()->years([2022...]).....->include('Sabado','Domingo')->get() ``` | El metodo ***include*** tambien se puede usar con los filtros por años y/o meses al igual que el notInclude, tambien se puede usar el metodo `->values()` para reiniciar las llaves desde 0. |
+### Método `today()`
+Este método inicializará la clase con la fecha actual de acuerdo a la zona horaria configurada en Laravel o de acuerdo a la zona horaria suministrada como argumento.
 
-## METODOS PARA FECHAS
-
-|       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
-| ------ | ------ |
-| ``` CalendarioColombia::now()->....() ``` | Se puede inicializar este listado de metodos con la fecha actual. |
-| ``` CalendarioColombia::date('2022-03-01')->isHoliday() ``` | Retorna verdadero o falso dependiendo si es o no festivo. |
-| ``` CalendarioColombia::date('2022-03-01')->description() ``` | Retorna el motivo que hace que el día sea festivo, en caso de no ser una fecha festiva, retorna `null`. |
-| ``` CalendarioColombia::date('2022-03-01')->isMonday() ``` | Retorna verdadero o falso dependiendo si es o no lunes. |
-| ``` CalendarioColombia::date('2022-03-01')->isTuesday() ``` | Retorna verdadero o falso dependiendo si es o no martes. |
-| ``` CalendarioColombia::date('2022-03-01')->isWednesday() ``` | Retorna verdadero o falso dependiendo si es o no miercoles. |
-| ``` CalendarioColombia::date('2022-03-01')->isThursday() ``` | Retorna verdadero o falso dependiendo si es o no jueves. |
-| ``` CalendarioColombia::date('2022-03-01')->isFriday() ``` | Retorna verdadero o falso dependiendo si es o no viernes. |
-| ``` CalendarioColombia::date('2022-03-01')->isSaturday() ``` | Retorna verdadero o falso dependiendo si es o no sabado. |
-| ``` CalendarioColombia::date('2022-03-01')->isSunday() ``` | Retorna verdadero o falso dependiendo si es o no domingo. |
-| ``` CalendarioColombia::date('2022-03-01')->getDayString() ``` | Retorna el numero del dia en string conservando el cero al inicio. |
-| ``` CalendarioColombia::date('2022-03-01')->getDayInt() ``` | Retorna el numero del dia en formato numero. |
-| ``` CalendarioColombia::date('2022-03-01')->getDayNumberISO() ``` | Retorna el numero del dia en formato ISO. |
-| ``` CalendarioColombia::date('2022-03-01')->getDayYear() ``` | Extrae el numero del año en formato entero |
-| ``` CalendarioColombia::date('2022-03-01')->getDayES() ``` | Retorna el nombre del dia en Español. |
-| ``` CalendarioColombia::date('2022-03-01')->getDayEN() ``` | Retorna el nombre del dia en Ingles. |
-| ``` CalendarioColombia::date('2022-03-01')->toArray() ``` | Retorna la fecha de hoy separo el dia el mes y el año. |
-| ``` CalendarioColombia::date('2022-03-01')->fixUp(10) ``` | Retorna un Arreglo con los dias agregados en el metodo hacia adelante. |
-| ``` CalendarioColombia::date('2022-03-01')->fixDown(10) ``` | Retorna un Arreglo con los dias agregados en el metodo hacia atrás. |
-| ``` CalendarioColombia::date('2022-03-01')->addDays(10) ``` | Suma los dias a la fecha establecida. |
-| ``` CalendarioColombia::date('2022-03-01')->reduceDays(10) ``` | Resta los dias a la fecha establecida. |
-| ``` CalendarioColombia::date('2022-03-01')->addMonths(10) ``` | Suma los meses a la fecha establecida. |
-| ``` CalendarioColombia::date('2022-03-01')->reduceMonths(10) ``` | Suma los meses a la fecha establecida. |
-| ``` CalendarioColombia::date('2022-03-01')->addYears(10) ``` | Suma los años a la fecha establecida. |
-| ``` CalendarioColombia::date('2022-03-01')->reduceYears(10) ``` | Resta los años a la fecha establecida. |
-| ``` CalendarioColombia::date('2022-03-01')->getWeekISO() ``` | Obtener el numero de la semana en el año en Formato ISO. |
-| ``` CalendarioColombia::date('2022-03-01')->getTimeZone() ``` | Permite comprobar si la fecha esta trabajando con la zona de tiempo de Colombia. |
-| ``` CalendarioColombia::date('2022-03-01')->getMonthES() ``` | Obtener el nombre del mes en Español. |
-| ``` CalendarioColombia::date('2022-03-01')->getMonthEN() ``` | Obtener el nombre del mes en Ingles. |
-| ``` CalendarioColombia::date('2022-03-01')->getMonthString() ``` | Obteber el mes en string con cero al inicio. |
-| ``` CalendarioColombia::date('2022-03-01')->getMonthInt() ``` | Obteber el mes en Entero. |
-| ``` CalendarioColombia::date('2022-03-01')->getYear() ``` | Obteber el número del año en Entero. |
-
-## METODOS ADICIONALES
-
-|       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
-| ------ | ------ |
-| ``` CalendarioColombia::getDaysMonth(2021,12) ``` | Retorna los dias del mes correspondiente al mes y año. |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->interval() ``` | Retorna los intervalos de Diferencia. |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->output() ``` | Retorna la diferencia entre dos fechas, en un array con la información detallada |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles. |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->notInclude('sabado',...)->notIncludeHolidays()->output() ``` | Retorna la diferencia entre dos fechas sin tener en cuenta el dia o los dias ingresados en el metodo `->notInclude()` los dias pueden estar en español o ingles y sin tener en cuenta los dias festivos. |
-| ``` CalendarioColombia::diff('2022-01-01','2022-08-01')->include('sabado',...)->includeHolidays()->output() ``` | Retorna la diferencia entre dos fechas teniendo en cuenta el dia o los dias ingresados en el metodo `->include()` los dias pueden estar en español o ingles y teniendo en cuenta los dias festivos. |
-
-Ejemplo de Uso
 ```php
-#Emplear este metodo para guardar datos en bases de datos, evitar usarlo en Bucles.
-CalendarioColombia::diff('2023-02-01','2023-03-31')->output();
-// array:5 [▼ // app/Http/Controllers/LandingController.php:14
-//   "days" => array:7 [▼
-//     "monday" => array:2 [▶]
-//     "tuesday" => array:2 [▶]
-//     "wednesday" => array:2 [▶]
-//     "thursday" => array:2 [▶]
-//     "friday" => array:2 [▶]
-//     "saturday" => array:2 [▶]
-//     "sunday" => array:2 [▶]
-//   ]
-//   "holidays" => array:2 [▼
-//     "count" => 9
-//     "dates" => array:9 [▶]
-//   ]
-//   "calendar_days" => 59
-//   "working_days" => 50
-//   "unconditionally_intervals" => array:3 [▼
-//     "years" => 0
-//     "months" => 1
-//     "days" => 31
-//   ]
+use Rmunate\Calendario\Calendar;
+
+// Inicializar la clase con la fecha actual de acuerdo a la zona horaria cargada en Laravel
+$calendar = Calendar::today();
+
+// Inicializar la clase con la fecha actual de la zona horaria suministrada.
+$calendar = Calendar::today('America/Bogota');
+```
+
+### Método `date()`
+Este método permite enviar una fecha específica para inicializar la clase.
+
+```php
+use Rmunate\Calendario\Calendar;
+
+// Con una fecha específica
+$calendar = Calendar::date('2023-09-01');
+
+// Con una fecha específica y una zona horaria específica
+$calendar = Calendar::date('2023-09-01', 'America/Bogota');
+```
+
+### Método `timeZone()`
+Este método inicializa la clase con una zona horaria específica.
+
+```php
+use Rmunate\Calendario\Calendar;
+
+$calendar = Calendar::timeZone('America/Bogota');
+```
+
+### Métodos de Asignación Encadenados
+A continuación, listamos los métodos disponibles dentro de la clase que podrás usar para concatenarlos entre sí y configurar la inicialización de la clase de una manera más clara y estructurada.
+
+#### Método `setTimezone()`
+Asignar una zona horaria después de los métodos inicializadores `today()` o `date()`.
+
+```php
+use Rmunate\Calendario\Calendar;
+
+$calendar = Calendar::date('2023-09-10')->setTimezone('America/Bogota');
+$calendar = Calendar::today()->setTimezone('America/Bogota');
+```
+
+#### Método `setDate()`
+Asignar una fecha en caso de que el método inicializador sea `timeZone()`.
+
+```php
+use Rmunate\Calendario\Calendar;
+
+$calendar = Calendar::timeZone('America/Bogota')->setDate('2023-09-10');
+```
+
+### Métodos de Manipulación de Fechas
+A continuación, listamos los métodos que podrás emplear anidados a cualquiera de los métodos de inicialización previamente mencionados. Para efectos de este manual, usaremos el método de inicialización `date()`, pero puedes usar cualquiera de los métodos mencionados anteriormente.
+
+```php
+use Rmunate\Calendario\Calendar;
+
+// Saber si la fecha es un día festivo en Colombia.
+$isHoliday = Calendar::date('2023-09-10')->isHoliday();
+
+// Obtener el motivo del día festivo o nulo en caso de que no sea festivo.
+$descriptionIfHoliday = Calendar::date('2023-09-10')->getDescriptionIfHoliday();
+
+// Validar si la fecha corresponde a un día específico de la semana. Retorna verdadero o falso.
+$isMonday = Calendar::date('2023-09-10')->isMonday();
+$isTuesday = Calendar::date('2023-09-10')->isTuesday();
+$isWednesday = Calendar::date('2023-09-10')->isWednesday();
+$isThursday = Calendar::date('2023-09-10')->isThursday();
+$isFriday = Calendar::date('2023-09-10')->isFriday();
+$isSaturday = Calendar::date('2023-09-10')->isSaturday();
+$isSunday = Calendar::date('2023-09-10')->isSunday();
+
+// Obtener valores específicos de la fecha.
+// Obtener el día del mes en formato de cadena o entero.
+$dayNumberString = Calendar::date('2023-09-01')->getDayNumberString(); //"01"
+$dayNumberInteger = Calendar::date('2023-09-01')->getDayNumberInteger(); //1
+
+$monthNumberString = Calendar::date('2023-09-01')->getMonthNumberString(); //"09"
+$monthNumberInteger = Calendar::date('2023-09-01')->getMonthNumberInteger(); //9
+
+$year = Calendar::date('2023-09-01')->getYear(); //2023
+
+// Obtener el ISO del día.
+$isoDate = Calendar::date('2023-09-10')->getDayNumberISO(); //7 (1 para lunes - 7 para domingo)
+$isoWeek = Calendar::date('2023-09-10')->getWeekISO(); //33
+
+// Obtener el número del día en el año.
+$numberDayInYear = Calendar::date('2023-09-10')->getDayYear(); //253
+
+// Obtener el nombre del día en español o inglés.
+$nameEnglish = Calendar::date('2023-09-10')->getNameDayEnglish(): //"Sunday"
+$nameSpanish = Calendar::date('2023-09-10')->getNameDaySpanish(); //"Domingo"
+
+// Obtener el nombre del mes en español o inglés.
+$nameEnglish = Calendar::date('2023-09-10')->getNameMonthEnglish(): //"September"
+$nameSpanish = Calendar::date('2023-09-10')->getNameDaySpanish(); //"Septiembre"
+
+// Obtener la fecha como un arreglo.
+$dateInArray = Calendar::date('2023-09-10')->toArray();
+// array:3 [▼ 
+//   "day" => "10"
+//   "month" => "09"
+//   "year" => "2023"
 // ]
+
+// Obtener la fecha como un objeto.
+$dateInObject = Calendar::date('2023-09-10')->toObject();
+// {#403 ▼ 
+//   +"day": "10"
+//   +"month": "09"
+//   +"year": "2023"
+// }
+
+// Crear un arreglo de días hacia adelante de acuerdo a la cantidad suministrada.
+$fixUp = Calendar::date('2023-09-10')->fixUp(3);
+// array:4 [▼ 
+//   0 => "2023-09-10"
+//   1 => "2023-09-11"
+//   2 => "2023-09-12"
+//   3 => "2023-09-13"
+// ]
+
+// Crear un arreglo de días hacia atrás de acuerdo a la cantidad suministrada.
+$fixDown = Calendar::date('2023-09-10')->fixDown(3);
+// array:4 [▼
+//   0 => "2023-09-10"
+//   1 => "2023-09-09"
+//   2 => "2023-09-08"
+//   3 => "2023-09-07"
+// ]
+
+// Agregar o restar días y obtener la fecha final.
+$addDays = Calendar::date('2023-09-10')->addDays(3); //"2023-09-13"
+$reduceDays = Calendar::date('2023-09-10')->subDays(3); //"2023-09-07" 
+
+// Agregar o restar meses.
+$addMonths = Calendar::date('2023-09-10')->addMonths(3); //"2023-12-10"
+$subMonths = Calendar::date('2023-09-10')->subMonths(3); //"2023-06-10"
+
+// Agregar o restar años.
+$addYears = Calendar::date('2023-09-10')->addYears(3); //"2026-09-10"
+$subYears = Calendar::date('2023-09-10')->subYears(3); //"2020-09-10"
+
+// Validar si la fecha es pasada o futura. Retorna verdadero o falso.
+$isPast = Calendar::date('2023-09-10')->isPast();
+$isFuture = Calendar::date('2023-09-10')->isFuture();
 ```
 
-## METODOS MIGRACIONES LARAVEL (NO USAR EN CONTROLADORES)
+### Métodos Directos
+A continuación, se listan los métodos que no requieren una inicialización a través de una fecha o una zona horaria.
 
-|       LLAMADO METODOS CLASE       |       DESCRIPCIÓN METODO       |
-| ------ | ------ |
-| ``` CalendarioColombia::schema()->create(); ``` | Crea la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
-| ``` CalendarioColombia::schema()->drop(); ``` | Elimina la tabla colombian_calendar, donde se alojará la informacion del calendario de Colombia. |
-| ``` CalendarioColombia::schema()->seeder(); ``` | Llena la tabla colombian_calendar, con todo el calendario de colombia entre las fechas disponibles en la clase ***Este Seeder puede tomar bastante tiempo, por lo cual es aconsejable esperar y no parar el proceso de migraciones con seeder hasta que termine. ***. |
-
-## Migraciones Y Seeders.
-Esta funcionalidad permite que la librería se encargue de cargar los datos del Calendario a una tabla de la base de datos, al ser diversos años los que se deben cargar, el procesado de los Seeder puede tomar un tiempo considerable, úselo si lo requiere teniendo en cuenta que al correr el comando `php artisan migrate` se notara demoras en el proceso.
-
-Código Migración Laravel
 ```php
-<?php
+use Rmunate\Calendario\Calendar;
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Rmunate\Calendario\CalendarioColombia;
-use Illuminate\Database\Migrations\Migration;
+// Conocer la cantidad de días de un mes en específico.
+$numberOfDaysMonth = Calendar::getDaysInMonth(2023, 9); //30
 
-return new class extends Migration
-{
-    /*-----------------------------------*/
-    public function up(){
-        CalendarioColombia::schema()->create();
-    }
+// Primer día del mes.
+$firstDayOfMonth = Calendar::getFirstDayOfMonth(2023, 9); //"2023-09-01"
 
-    /*-----------------------------------*/
-    public function down(){
-        CalendarioColombia::schema()->drop();
-    }
-};
+// Último día del mes.
+$lastDayOfMonth = Calendar::getLastDayOfMonth(2023, 9); //"2023-09-30"
+
+// Validar si es un año bisiesto - Retorna verdadero o falso.
+$isLeapYear = Calendar::isLeapYear(2023);
 ```
 
-Codigo Seeder Laravel
+### Métodos para Calcular Diferencias entre Fechas
 ```php
-<?php
+use Rmunate\Calendario\Calendar;
 
-namespace Database\Seeders;
+// Diferencia entre dos fechas contemplando horas, minutos y segundos.
+$diff = Calendar::diff(['2023-09-01 00:01:00', '2023-09-09 12:00:00'])->getDatetimeIntervals();
+// {#404 ▼
+//   +"years": 0
+//   +"months": 0
+//   +"days": 8
+//   +"hours": 11
+//   +"minutes": 59
+//   +"seconds": 0
+// }
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Rmunate\Calendario\CalendarioColombia;
+// Diferencia entre dos fechas sin contemplar horas, minutos y segundos.
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->getDateIntervals();
+// {#404 ▼
+//   +"years": 0
+//   +"months": 0
+//   +"days": 8
+// }
 
-class ColombianCalendarSeeder extends Seeder
-{
-    public function run(){
-        CalendarioColombia::schema()->seeder();
-    }
-}
+// Diferencia en Lenguaje Humano.
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->forHumans(); //"1 Semana Antes"
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->forHumans('es'); //"1 Semana Antes"
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->forHumans('en'); //"1 Week Before"
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->forHumans('fr'); //"1 Semaine Avant"
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->forHumans(...); //"...."
+
+// Diferencia específicamente en días.
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->inDays(); //8
+
+// Diferencia excluyendo días específicos. Tener presente que este método cuenta día a día, a excepción del método inDays() que no contempla el día inicial.
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->excludingDays(); //9 
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->excludingDays('Sabado', 'Domingo'); //6
+$diff = Calendar::diff(['2023-09-01', '2023-09-09'])->excludingDays('Saturday', 'Sunday'); //6
+
+// Diferencia entre dos fechas excluyendo festivos.
+$diff = Calendar::diff(['2023-08-01', '2023-09-09'])->excludingHolidays(); //33
+
+// Diferencia entre dos fechas excluyendo días específicos más días festivos.
+$diff = Calendar::diff(['2023-08-01', '2023-09-09'])->excludingHolidaysAndThisDays('Viernes', 'Domingo'); //27
 ```
 
+## Uso de la Clase **Holidays**
+Con esta clase, podrás realizar diversas operaciones específicamente con las fechas festivas del país. Podrás inicializar la clase a través de la Clase `Calendar` o directamente usando `Holidays`.
 
-## Mantenedores
-- Ingeniero, Raúl Mauricio Uñate Castro (raulmauriciounate@gmail.com)
+Usando Calendar:
+```php
+use Rmunate\Calendario\Calendar;
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+$holidays = Calendar::onlyHolidays();
+```
+
+Usando Holidays:
+```php
+use Rmunate\Calendario\Holidays;
+
+$holidays = Holidays::colombia();
+```
+
+### Métodos Disponibles para Trabajar con Días Festivos
+Podrás usar cualquiera de los siguientes métodos concatenándolos a las dos posibles maneras de inicializar la consulta de fechas festivas. Para efectos del manual, usaremos la clase `Holidays`.
+
+```php
+use Rmunate\Calendario\Holidays;
+
+// Consultar los años actualmente disponibles para trabajar los festivos.
+$holidays = Holidays::colombia()->yearsAvailable();
+// array:35 [▼
+//   0 => 2000
+//   ...
+//   34 => 2034
+// ]
+
+// Consulta del 100% de los días festivos disponibles en una colección de Laravel Framework.
+$holidays = Holidays::colombia()->all();
+
+// Retorna los festivos específicos de un año en una colección de Laravel Framework.
+$holidays = Holidays::colombia()->year(2023)->get();
+
+// Consultar los festivos de uno o varios años.
+$holidays = Holidays::colombia()->years(2022, 2023)->get();
+
+// Consultar a su vez los festivos de un mes o varios meses en específico.
+$holidays = Holidays::colombia()->year(2023)->month(8)->get();
+$holidays = Holidays::colombia()->years(2022, 2023)->month(8)->get();
+
+$holidays = Holidays::colombia()->year(2023)->months(8, 9)->get();
+$holidays = Holidays::colombia()->years(2022, 2023)->months(8, 9)->get();
+
+// Consultar los festivos entre dos fechas.
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->get();
+
+// Consultar los festivos sin incluir ciertos días.
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->notInclude('Domingo')->get();
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->notInclude('Sunday')->get();
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->notInclude('Viernes', 'Domingo')->get();
+
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->except('Domingo')->get();
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->except('Sunday')->get();
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->except('Viernes', 'Domingo')->get();
+
+// Consultar los festivos de los días de la semana suministrados.
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->include('Lunes')->get()
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->include('Sunday')->get()
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->include('Viernes', 'Domingo')->get()
+
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->only('Lunes')->get()
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->only('Sunday')->get()
+$holidays = Holidays::colombia()->between(['2023-08-01', '2023-09-09'])->only('Viernes', 'Domingo')->get()
+```
+
+### Métodos Finales Diferentes a `->get()`
+Además del método get, tendrás la posibilidad de emplear los siguientes métodos finales.
+
+```php
+$holidays = Holidays::colombia()->year(2023)->get(); // Retorna una colección de Laravel
+$holidays = Holidays::colombia()->year(2023)->toCollect(); // Retorna una colección de Laravel
+$holidays = Holidays::colombia()->year(2023)->toArray(); // Retorna la respuesta como un array
+$holidays = Holidays::colombia()->year(2023)->toJson(); // Retorna la respuesta como un JSON
+$holidays = Holidays::colombia()->year(2023)->count(); // Retorna la cuenta de días festivos
+$holidays = Holidays::colombia()->year(2023)->first(); // Retorna el primer día festivo
+$holidays = Holidays::colombia()->year(2023)->last(); // Retorna el último día festivo
+$holidays = Holidays::colombia()->year(2023)->pluck('holiday_reason', 'full_date'); // Retorna un arreglo indexado de fecha y motivo del festivo
+$holidays = Holidays::colombia()->year(2023)->groupBy('month'); // Retorna la data agrupada según sea solicitado.
+```
+
+## Creador
+- 🇨🇴 Raúl Mauricio Uñate Castro
+- Email: raulmauriciounate@gmail.com
+
+## Licencia
+Este proyecto está bajo la [Licencia MIT](https://choosealicense.com/licenses/mit/).
+
+🌟 ¡Apoya mis proyectos! 🚀
+
+Haz las contribuciones que consideres adecuadas; el código es completamente tuyo. Juntos, podemos hacer cosas increíbles y mejorar el mundo del desarrollo. Tu apoyo es invaluable. ✨
+
+Si tienes ideas, sugerencias o simplemente quieres colaborar, estamos abiertos a todo. Únete a nuestra comunidad y sé parte de nuestro viaje hacia el éxito. 🌐👩‍💻👨‍💻

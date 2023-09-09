@@ -3,6 +3,8 @@
 namespace Rmunate\Calendario;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Rmunate\Calendario\Calendar;
 use Rmunate\Calendario\Traits\Translator;
 use Rmunate\Calendario\Bases\BaseDifference;
 
@@ -25,7 +27,7 @@ final class Difference extends BaseDifference
      *
      * @return object An object containing the difference in years, months, days, hours, minutes, and seconds.
      */
-    public function intervals()
+    public function getDatetimeIntervals()
     {
         $fechaInicio = Carbon::create($this->start);
         $fechaFin = Carbon::create($this->end);
@@ -39,6 +41,25 @@ final class Difference extends BaseDifference
             'hours' => $intervalo->h,
             'minutes' => $intervalo->i,
             'seconds' => $intervalo->s
+        ];
+    }
+
+    /**
+     * Calculate and retrieve the difference between the start and end dates in intervals.
+     *
+     * @return object An object containing the difference in years, months, days, hours, minutes, and seconds.
+     */
+    public function getDateIntervals()
+    {
+        $fechaInicio = Carbon::create($this->start);
+        $fechaFin = Carbon::create($this->end);
+
+        $intervalo = $fechaInicio->diffAsCarbonInterval($fechaFin);
+
+        return (object) [
+            'years' => $intervalo->y,
+            'months' => $intervalo->m,
+            'days' => $intervalo->d
         ];
     }
 
@@ -57,7 +78,7 @@ final class Difference extends BaseDifference
         $fechaInicio = Carbon::create($this->start);
         $fechaFin = Carbon::create($this->end);
 
-        return $fechaInicio->diffForHumans($fechaFin);
+        return Str::title($fechaInicio->diffForHumans($fechaFin));
     }
 
     /**
@@ -85,9 +106,7 @@ final class Difference extends BaseDifference
         $excluded = [];
         foreach ($excludedDays as $nameDay) {
             $name = $this->spanishToEnglishDay($nameDay);
-            if ($name !== null) {
-                array_push($excluded, $name);
-            }
+            array_push($excluded, ($name !== null) ? $name : $nameDay);
         }
 
         // Parse the start and end dates using Carbon
@@ -119,7 +138,26 @@ final class Difference extends BaseDifference
      */
     public function excludingHolidays()
     {
-        //... (Implementation missing)
+        // Parse the start and end dates using Carbon
+        $start = Carbon::parse($this->start);
+        $end = Carbon::parse($this->end);
+
+        // Initialize a counter for the difference in days
+        $difference = 0;
+
+        // Iterate through each day in the range
+        while ($start->lte($end)) {
+
+            // Check if the current day name is in the list of excluded days
+            if (!Calendar::date($start)->isHoliday()) {
+                $difference++;
+            }
+
+            // Move to the next day
+            $start->addDay();
+        }
+
+        return $difference;
     }
 
     /**
@@ -130,6 +168,31 @@ final class Difference extends BaseDifference
      */
     public function excludingHolidaysAndThisDays(...$excludedDays)
     {
-        //... (Implementation missing)
+        $excluded = [];
+        foreach ($excludedDays as $nameDay) {
+            $name = $this->spanishToEnglishDay($nameDay);
+            array_push($excluded, ($name !== null) ? $name : $nameDay);
+        }
+
+        // Parse the start and end dates using Carbon
+        $start = Carbon::parse($this->start);
+        $end = Carbon::parse($this->end);
+
+        // Initialize a counter for the difference in days
+        $difference = 0;
+
+        // Iterate through each day in the range
+        while ($start->lte($end)) {
+
+            // Check if the current day name is in the list of excluded days
+            if (!in_array($start->englishDayOfWeek, $excluded) && !Calendar::date($start)->isHoliday()) {
+                $difference++;
+            }
+
+            // Move to the next day
+            $start->addDay();
+        }
+
+        return $difference;
     }
 }

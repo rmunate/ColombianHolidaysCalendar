@@ -25,17 +25,17 @@ final class Calendar extends BaseCalendar
     /**
      * Constructor for the Calendar class.
      *
-     * @param mixed $type The type or initialization parameter.
+     * @param string $type The type or initialization parameter.
      * @param string|null $date The date to work with (default is null).
      * @param string|null $timeZone The timezone to use (default is null).
      * @param string|null $country The country for holiday data (default is null).
      */
-    public function __construct($type, $date = null, $timeZone = null, $country = null) {
+    public function __construct(string $type, string $date = null, string $timeZone = null, string $country = null)
+    {    
         $this->initializer = $type;
         $this->date = $date;
         $this->timeZone = $timeZone;
         $this->country = $country;
-        $this->_setTimeZone($this->timeZone);
     }
 
     /**
@@ -44,7 +44,7 @@ final class Calendar extends BaseCalendar
      * @param string $country The country to set.
      * @return $this The current instance of the Calendar class.
      */
-    public function country(string $country)
+    public function setCountry(string $country)
     {
         $this->country = $country;
         return $this;
@@ -56,10 +56,21 @@ final class Calendar extends BaseCalendar
      * @param string $timeZone The timezone to set.
      * @return $this The current instance of the Calendar class.
      */
-    public function timezone(string $timeZone)
+    public function setTimezone(string $timeZone)
     {
         $this->_setTimeZone($timeZone);
         return $this;
+    }
+
+    /**
+     * Set new Date
+     * @param string $date
+     * @return $this The current instance of the Calendar class.
+     */
+    public function setDate(string $date)
+    {
+       $this->date = Carbon::parse($date, $this->timeZone)->format('Y-m-d');
+       return $this;
     }
 
    /**
@@ -71,17 +82,6 @@ final class Calendar extends BaseCalendar
     {
         $date = $this->holidays()->where("full_date", $this->date)->first();
         return !empty($date);
-    }
-
-    /**
-     * Get the description of the holiday if the current date is a holiday.
-     *
-     * @return string|null The description of the holiday, or null if it's not a holiday.
-     */
-    public function description()
-    {
-        $date = $this->holidays()->where("full_date", $this->date)->first();
-        return !empty($date) ? $date['holiday_reason'] : null;
     }
 
     /**
@@ -246,7 +246,7 @@ final class Calendar extends BaseCalendar
      *
      * @return object An object with day, month, and year properties.
      */
-    public function destructure()
+    public function toObject()
     {
         $now = date('d-m-Y', strtotime($this->date));
         return (object)[
@@ -503,7 +503,7 @@ final class Calendar extends BaseCalendar
      *
      * @return \Carbon\Carbon The Carbon instance of the current date.
      */
-    public function carbon()
+    public function toCarbon()
     {
         return Carbon::parse($this->date);
     }

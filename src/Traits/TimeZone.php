@@ -2,8 +2,7 @@
 
 namespace Rmunate\Calendario\Traits;
 
-use DateTime;
-use DateTimeZone;
+use Carbon\Carbon;
 use Rmunate\LaravelConfigRuntime\LaravelRuntime;
 
 trait TimeZone
@@ -14,26 +13,20 @@ trait TimeZone
      * @param string|null $timeZone The timezone to set.
      * @return string The updated timezone.
      */
-    private function _setTimeZone($timeZone)
+    private function _setTimeZone(string $timeZone)
     {
-        if (empty($timeZone)) {
-            // Use Laravel's configured timezone if $timeZone is empty
-            $timeZone = LaravelRuntime::config()->get('app.timezone');
-        }
-
-        // Set the timezone in PHP
-        @date_default_timezone_set($timeZone);
+        $timeZone = $timeZone ?? LaravelRuntime::config()->get('app.timezone');
 
         // Set the timezone in Laravel's configuration
+        @date_default_timezone_set($timeZone);
         LaravelRuntime::config()->set('app.timezone', $timeZone);
 
         // Set the class property for timezone
         $this->timeZone = $timeZone;
 
-        // If the initializer is "now," update the date property
-        if ($this->initializer == "now") {
-            $currentDateTime = new DateTime('now', new DateTimeZone($this->timeZone));
-            $this->date = $currentDateTime->format('Y-m-d');
+        // If the initializer is "Today," update the date property
+        if ($this->initializer == "Today") {
+            $this->date = Carbon::today($this->timeZone)->format('Y-m-d');
         }
 
         return $this->timeZone;
