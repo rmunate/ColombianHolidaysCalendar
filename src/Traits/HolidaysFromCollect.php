@@ -2,8 +2,8 @@
 
 namespace Rmunate\Calendario\Traits;
 
-use Rmunate\Calendario\Holidays\Country;
 use Illuminate\Support\Collection;
+use Rmunate\Calendario\Holidays\Country;
 
 trait HolidaysFromCollect
 {

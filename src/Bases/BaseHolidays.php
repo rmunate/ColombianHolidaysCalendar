@@ -2,8 +2,6 @@
 
 namespace Rmunate\Calendario\Bases;
 
-use Rmunate\Calendario\Bases\BaseCalendar;
-
 abstract class BaseHolidays
 {
     /**
@@ -16,6 +14,7 @@ abstract class BaseHolidays
     public static function country(string $country = null)
     {
         $country = $country ?? BaseCalendar::CALENDAR_DEFAULT_COUNTRY;
+
         return new static($country);
     }
 
@@ -28,5 +27,4 @@ abstract class BaseHolidays
     {
         return new static('Colombia');
     }
-    
 }
