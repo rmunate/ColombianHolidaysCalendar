@@ -7,6 +7,8 @@ This package allows you to work with Colombian holidays. With the use of two cla
 [![Laravel 9.0+](https://img.shields.io/badge/Laravel-9.0%2B-orange.svg)](https://laravel.com)
 [![Laravel 10.0+](https://img.shields.io/badge/Laravel-10.0%2B-orange.svg)](https://laravel.com)
 
+![CALENDARIO-COLOMBIA](https://github.com/rmunate/ColombianCalendar/assets/91748598/2704135f-f8ad-4875-a0d9-bfbaea90fed9)
+
 📖 [**DOCUMENTATION IN SPANISH**](README.md) 📖
 
 ## Table of Contents
