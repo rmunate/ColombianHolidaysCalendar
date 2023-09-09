@@ -4,9 +4,8 @@ namespace Rmunate\Calendario;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Rmunate\Calendario\Calendar;
-use Rmunate\Calendario\Traits\Translator;
 use Rmunate\Calendario\Bases\BaseDifference;
+use Rmunate\Calendario\Traits\Translator;
 
 final class Difference extends BaseDifference
 {
@@ -16,7 +15,8 @@ final class Difference extends BaseDifference
     private $end;
     private $country;
 
-    public function __construct(string $start, string $end, $country) {
+    public function __construct(string $start, string $end, $country)
+    {
         $this->start = $start;
         $this->end = $end;
         $this->country = $country;
@@ -35,12 +35,12 @@ final class Difference extends BaseDifference
         $intervalo = $fechaInicio->diffAsCarbonInterval($fechaFin);
 
         return (object) [
-            'years' => $intervalo->y,
-            'months' => $intervalo->m,
-            'days' => $intervalo->d,
-            'hours' => $intervalo->h,
+            'years'   => $intervalo->y,
+            'months'  => $intervalo->m,
+            'days'    => $intervalo->d,
+            'hours'   => $intervalo->h,
             'minutes' => $intervalo->i,
-            'seconds' => $intervalo->s
+            'seconds' => $intervalo->s,
         ];
     }
 
@@ -57,9 +57,9 @@ final class Difference extends BaseDifference
         $intervalo = $fechaInicio->diffAsCarbonInterval($fechaFin);
 
         return (object) [
-            'years' => $intervalo->y,
+            'years'  => $intervalo->y,
             'months' => $intervalo->m,
-            'days' => $intervalo->d
+            'days'   => $intervalo->d,
         ];
     }
 
@@ -67,6 +67,7 @@ final class Difference extends BaseDifference
      * Get a human-readable representation of the time difference between the start and end dates.
      *
      * @param string|null $lang The language for formatting (optional).
+     *
      * @return string A human-readable time difference string.
      */
     public function forHumans($lang = null)
@@ -85,6 +86,7 @@ final class Difference extends BaseDifference
      * Calculate and retrieve the difference between the start and end dates in days.
      *
      * @param string|null $lang The language for formatting (optional).
+     *
      * @return int The difference in days between the start and end dates.
      */
     public function inDays($lang = null)
@@ -99,6 +101,7 @@ final class Difference extends BaseDifference
      * Calculate and retrieve the difference in days, excluding specified days of the week.
      *
      * @param string ...$excludedDays The days of the week to exclude.
+     *
      * @return int The difference in days, excluding the specified days.
      */
     public function excludingDays(...$excludedDays)
@@ -118,7 +121,6 @@ final class Difference extends BaseDifference
 
         // Iterate through each day in the range
         while ($start->lte($end)) {
-
             // Check if the current day name is in the list of excluded days
             if (!in_array($start->englishDayOfWeek, $excluded)) {
                 $difference++;
@@ -147,7 +149,6 @@ final class Difference extends BaseDifference
 
         // Iterate through each day in the range
         while ($start->lte($end)) {
-
             // Check if the current day name is in the list of excluded days
             if (!Calendar::date($start)->isHoliday()) {
                 $difference++;
@@ -164,6 +165,7 @@ final class Difference extends BaseDifference
      * Calculate and retrieve the difference in days, excluding holidays and specified days of the week.
      *
      * @param string ...$excludedDays The days of the week to exclude.
+     *
      * @return int The difference in days, excluding holidays and specified days.
      */
     public function excludingHolidaysAndThisDays(...$excludedDays)
@@ -183,7 +185,6 @@ final class Difference extends BaseDifference
 
         // Iterate through each day in the range
         while ($start->lte($end)) {
-
             // Check if the current day name is in the list of excluded days
             if (!in_array($start->englishDayOfWeek, $excluded) && !Calendar::date($start)->isHoliday()) {
                 $difference++;

@@ -2,9 +2,9 @@
 
 namespace Rmunate\Calendario;
 
-use Rmunate\Calendario\Traits\Translator;
 use Rmunate\Calendario\Bases\BaseHolidays;
 use Rmunate\Calendario\Traits\HolidaysFromCollect;
+use Rmunate\Calendario\Traits\Translator;
 
 final class Holidays extends BaseHolidays
 {
@@ -50,11 +50,13 @@ final class Holidays extends BaseHolidays
      * Filter holidays by a specific year.
      *
      * @param int $year The year to filter by.
+     *
      * @return $this
      */
     public function year(int $year)
     {
         $this->response = $this->query()->where('year', $year)->values();
+
         return $this;
     }
 
@@ -62,11 +64,13 @@ final class Holidays extends BaseHolidays
      * Filter holidays by multiple years.
      *
      * @param array ...$years An array of years to filter by.
+     *
      * @return $this
      */
     public function years(...$years)
     {
         $this->response = $this->query()->whereIn('year', $years)->values();
+
         return $this;
     }
 
@@ -74,11 +78,13 @@ final class Holidays extends BaseHolidays
      * Filter holidays by a specific month.
      *
      * @param int $month The month to filter by.
+     *
      * @return $this
      */
     public function month(int $month)
     {
         $this->response = $this->query()->where('month', $month)->values();
+
         return $this;
     }
 
@@ -86,11 +92,13 @@ final class Holidays extends BaseHolidays
      * Filter holidays by multiple months.
      *
      * @param array ...$months An array of months to filter by.
+     *
      * @return $this
      */
     public function months(...$months)
     {
         $this->response = $this->query()->whereIn('month', $months)->values();
+
         return $this;
     }
 
@@ -98,11 +106,13 @@ final class Holidays extends BaseHolidays
      * Filter holidays by a date range.
      *
      * @param array $between An array containing the start and end dates.
+     *
      * @return $this
      */
     public function between(array $between)
     {
         $this->response = $this->query()->whereBetween('full_date', $between)->values();
+
         return $this;
     }
 
@@ -110,6 +120,7 @@ final class Holidays extends BaseHolidays
      * Exclude specific days from the holidays.
      *
      * @param string ...$days An array of days to exclude.
+     *
      * @return $this
      */
     public function notInclude(...$days)
@@ -121,6 +132,7 @@ final class Holidays extends BaseHolidays
         }
 
         $this->response = $this->query()->whereNotIn('day_name', $daysArray)->values();
+
         return $this;
     }
 
@@ -128,6 +140,7 @@ final class Holidays extends BaseHolidays
      * Exclude specific days from the holidays.
      *
      * @param string ...$days An array of days to exclude.
+     *
      * @return $this
      */
     public function except(...$days)
@@ -139,6 +152,7 @@ final class Holidays extends BaseHolidays
         }
 
         $this->response = $this->query()->whereNotIn('day_name', $daysArray)->values();
+
         return $this;
     }
 
@@ -146,6 +160,7 @@ final class Holidays extends BaseHolidays
      * Include only specific days in the holidays.
      *
      * @param string ...$days An array of days to include.
+     *
      * @return $this
      */
     public function only(...$days)
@@ -157,6 +172,7 @@ final class Holidays extends BaseHolidays
         }
 
         $this->response = $this->query()->whereIn('day_name', $daysArray)->values();
+
         return $this;
     }
 
@@ -164,6 +180,7 @@ final class Holidays extends BaseHolidays
      * Include specific days in the holidays.
      *
      * @param string ...$days An array of days to include.
+     *
      * @return $this
      */
     public function include(...$days)
@@ -175,6 +192,7 @@ final class Holidays extends BaseHolidays
         }
 
         $this->response = $this->query()->whereIn('day_name', $daysArray)->values();
+
         return $this;
     }
 
@@ -253,8 +271,9 @@ final class Holidays extends BaseHolidays
     /**
      * Pluck a column's value from the filtered holidays.
      *
-     * @param  string  $column
-     * @param  string|null  $key
+     * @param string      $column
+     * @param string|null $key
+     *
      * @return \Illuminate\Support\Collection
      */
     public function pluck($column, $key = null)
@@ -265,7 +284,8 @@ final class Holidays extends BaseHolidays
     /**
      * Group the filtered holidays by a given key.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return \Illuminate\Support\Collection
      */
     public function groupBy($key)
@@ -273,4 +293,3 @@ final class Holidays extends BaseHolidays
         return $this->response()->groupBy($key);
     }
 }
-

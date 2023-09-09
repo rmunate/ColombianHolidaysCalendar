@@ -7,12 +7,13 @@ use Rmunate\LaravelConfigRuntime\LaravelRuntime;
 
 abstract class BaseCalendar
 {
-    const CALENDAR_DEFAULT_COUNTRY = "Colombia";
+    const CALENDAR_DEFAULT_COUNTRY = 'Colombia';
 
     /**
      * Create a new instance with the current date.
      *
      * @param string|null $timeZone The timezone to use (optional).
+     *
      * @return static
      */
     public static function today(string $timeZone = null)
@@ -28,6 +29,7 @@ abstract class BaseCalendar
      *
      * @param string|null $date     The date to use (optional).
      * @param string|null $timeZone The timezone to use (optional).
+     *
      * @return static
      */
     public static function date(string $date, string $timeZone = null)
@@ -42,6 +44,7 @@ abstract class BaseCalendar
      * Create a new instance with a supplied timezone.
      *
      * @param string|null $timeZone The timezone to use (optional).
+     *
      * @return static
      */
     public static function timeZone(string $timeZone)

@@ -3,20 +3,20 @@
 namespace Rmunate\Calendario;
 
 use Carbon\Carbon;
-use Rmunate\Calendario\Traits\TimeZone;
-use Rmunate\Calendario\Holidays\Country;
-use Rmunate\Calendario\Traits\Translator;
 use Rmunate\Calendario\Bases\BaseCalendar;
+use Rmunate\Calendario\Holidays\Country;
 use Rmunate\Calendario\Traits\CalendarStatic;
 use Rmunate\Calendario\Traits\HolidaysFromCollect;
+use Rmunate\Calendario\Traits\TimeZone;
+use Rmunate\Calendario\Traits\Translator;
 
-final class Calendar extends BaseCalendar 
+final class Calendar extends BaseCalendar
 {
     use TimeZone; // Include the TimeZone trait.
     use Translator; // Include the Translator trait.
     use CalendarStatic; // Include the CalendarStatic trait.
     use HolidaysFromCollect; // Include the HolidaysFromCollect trait.
-    
+
     private $initializer;
     private $timeZone;
     private $country;
@@ -25,13 +25,13 @@ final class Calendar extends BaseCalendar
     /**
      * Constructor for the Calendar class.
      *
-     * @param string $type The type or initialization parameter.
-     * @param string|null $date The date to work with (default is null).
+     * @param string      $type     The type or initialization parameter.
+     * @param string|null $date     The date to work with (default is null).
      * @param string|null $timeZone The timezone to use (default is null).
-     * @param string|null $country The country for holiday data (default is null).
+     * @param string|null $country  The country for holiday data (default is null).
      */
     public function __construct(string $type, string $date = null, string $timeZone = null, string $country = null)
-    {    
+    {
         $this->initializer = $type;
         $this->date = $date;
         $this->timeZone = $timeZone;
@@ -42,11 +42,13 @@ final class Calendar extends BaseCalendar
      * Set the country for holiday data.
      *
      * @param string $country The country to set.
+     *
      * @return $this The current instance of the Calendar class.
      */
     public function setCountry(string $country)
     {
         $this->country = $country;
+
         return $this;
     }
 
@@ -54,33 +56,39 @@ final class Calendar extends BaseCalendar
      * Set the timezone for the calendar.
      *
      * @param string $timeZone The timezone to set.
+     *
      * @return $this The current instance of the Calendar class.
      */
     public function setTimezone(string $timeZone)
     {
         $this->_setTimeZone($timeZone);
+
         return $this;
     }
 
     /**
-     * Set new Date
+     * Set new Date.
+     *
      * @param string $date
+     *
      * @return $this The current instance of the Calendar class.
      */
     public function setDate(string $date)
     {
-       $this->date = Carbon::parse($date, $this->timeZone)->format('Y-m-d');
-       return $this;
+        $this->date = Carbon::parse($date, $this->timeZone)->format('Y-m-d');
+
+        return $this;
     }
 
-   /**
+    /**
      * Check if the current date is a holiday.
      *
      * @return bool True if the date is a holiday, false otherwise.
      */
     public function isHoliday()
     {
-        $date = $this->holidays()->where("full_date", $this->date)->first();
+        $date = $this->holidays()->where('full_date', $this->date)->first();
+
         return !empty($date);
     }
 
@@ -91,7 +99,8 @@ final class Calendar extends BaseCalendar
      */
     public function getDescriptionIfHoliday()
     {
-        $date = $this->holidays()->where("full_date", $this->date)->first();
+        $date = $this->holidays()->where('full_date', $this->date)->first();
+
         return !empty($date) ? $date['holiday_reason'] : null;
     }
 
@@ -223,6 +232,7 @@ final class Calendar extends BaseCalendar
     public function getNameDaySpanish()
     {
         $inEnglish = Carbon::parse($this->date)->format('l');
+
         return $this->englishToSpanishDay($inEnglish);
     }
 
@@ -234,10 +244,11 @@ final class Calendar extends BaseCalendar
     public function toArray()
     {
         $now = date('d-m-Y', strtotime($this->date));
+
         return [
-            'day' => substr($now, -10, 2),
+            'day'   => substr($now, -10, 2),
             'month' => substr($now, -7, 2),
-            'year' => substr($now, -4, 4)
+            'year'  => substr($now, -4, 4),
         ];
     }
 
@@ -249,10 +260,11 @@ final class Calendar extends BaseCalendar
     public function toObject()
     {
         $now = date('d-m-Y', strtotime($this->date));
-        return (object)[
-            'day' => substr($now, -10, 2),
+
+        return (object) [
+            'day'   => substr($now, -10, 2),
             'month' => substr($now, -7, 2),
-            'year' => substr($now, -4, 4)
+            'year'  => substr($now, -4, 4),
         ];
     }
 
@@ -260,6 +272,7 @@ final class Calendar extends BaseCalendar
      * Generate an array of dates that starts with the current date and goes forward by the specified number of days.
      *
      * @param int $amount The number of days to add.
+     *
      * @return array An array of dates.
      */
     public function fixUp(int $amount = 0)
@@ -272,7 +285,7 @@ final class Calendar extends BaseCalendar
 
             for ($dayP = 1; $dayP <= $amount; $dayP++) {
                 // Calculate the next date
-                $nextDate = date("Y-m-d", strtotime($currentDate . " + 1 day"));
+                $nextDate = date('Y-m-d', strtotime($currentDate.' + 1 day'));
                 // Add Value
                 array_push($response, $nextDate);
                 // Update the current date
@@ -287,6 +300,7 @@ final class Calendar extends BaseCalendar
      * Generate an array of dates that starts with the current date and goes backward by the specified number of days.
      *
      * @param int $amount The number of days to subtract.
+     *
      * @return array An array of dates.
      */
     public function fixDown(int $amount = 0)
@@ -299,7 +313,7 @@ final class Calendar extends BaseCalendar
 
             for ($dayP = 1; $dayP <= $amount; $dayP++) {
                 // Calculate the previous date
-                $previousDate = date("Y-m-d", strtotime($currentDate . " - 1 day"));
+                $previousDate = date('Y-m-d', strtotime($currentDate.' - 1 day'));
                 // Add Value
                 array_push($response, $previousDate);
                 // Update the current date
@@ -314,6 +328,7 @@ final class Calendar extends BaseCalendar
      * Add a specified number of days to the current date.
      *
      * @param int $amount The number of days to add.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function addDays(int $amount = 0)
@@ -328,6 +343,7 @@ final class Calendar extends BaseCalendar
      * Subtract a specified number of days from the current date.
      *
      * @param int $amount The number of days to subtract.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function reduceDays(int $amount = 0)
@@ -342,6 +358,7 @@ final class Calendar extends BaseCalendar
      * Alias for the `reduceDays` method to subtract a specified number of days from the current date.
      *
      * @param int $amount The number of days to subtract.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function subDays(int $amount = 0)
@@ -353,6 +370,7 @@ final class Calendar extends BaseCalendar
      * Add a specified number of months to the current date.
      *
      * @param int $amount The number of months to add.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function addMonths(int $amount = 0)
@@ -367,6 +385,7 @@ final class Calendar extends BaseCalendar
      * Subtract a specified number of months from the current date.
      *
      * @param int $amount The number of months to subtract.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function reduceMonths(int $amount = 0)
@@ -381,6 +400,7 @@ final class Calendar extends BaseCalendar
      * Alias for the `reduceMonths` method to subtract a specified number of months from the current date.
      *
      * @param int $amount The number of months to subtract.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function subMonths(int $amount = 0)
@@ -392,6 +412,7 @@ final class Calendar extends BaseCalendar
      * Add a specified number of years to the current date.
      *
      * @param int $amount The number of years to add.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function addYears(int $amount = 0)
@@ -406,6 +427,7 @@ final class Calendar extends BaseCalendar
      * Subtract a specified number of years from the current date.
      *
      * @param int $amount The number of years to subtract.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function reduceYears(int $amount = 0)
@@ -420,6 +442,7 @@ final class Calendar extends BaseCalendar
      * Alias for the `reduceYears` method to subtract a specified number of years from the current date.
      *
      * @param int $amount The number of years to subtract.
+     *
      * @return string The new date as a string in 'Y-m-d' format.
      */
     public function subYears(int $amount = 0)
@@ -454,7 +477,7 @@ final class Calendar extends BaseCalendar
      */
     public function getNameMonthEnglish()
     {
-        return Carbon::parse($this->date)->format("F");
+        return Carbon::parse($this->date)->format('F');
     }
 
     /**
@@ -464,7 +487,8 @@ final class Calendar extends BaseCalendar
      */
     public function getNameMonthSpanish()
     {
-        $inEnglish = Carbon::parse($this->date)->format("F");
+        $inEnglish = Carbon::parse($this->date)->format('F');
+
         return $this->englishToSpanishMonth($inEnglish);
     }
 
@@ -475,7 +499,7 @@ final class Calendar extends BaseCalendar
      */
     public function getMonthNumberString()
     {
-        return Carbon::parse($this->date)->format("m");
+        return Carbon::parse($this->date)->format('m');
     }
 
     /**
@@ -485,7 +509,7 @@ final class Calendar extends BaseCalendar
      */
     public function getMonthNumberInteger()
     {
-        return intval(Carbon::parse($this->date)->format("n"));
+        return intval(Carbon::parse($this->date)->format('n'));
     }
 
     /**
@@ -495,7 +519,7 @@ final class Calendar extends BaseCalendar
      */
     public function getYear()
     {
-        return intval(Carbon::parse($this->date)->format("Y"));
+        return intval(Carbon::parse($this->date)->format('Y'));
     }
 
     /**

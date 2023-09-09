@@ -25,5 +25,4 @@ abstract class BaseCountry
         // Return the data as a collection
         return Collection::make($countryData);
     }
-
 }

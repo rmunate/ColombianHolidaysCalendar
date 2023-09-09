@@ -11,6 +11,7 @@ trait TimeZone
      * Set the timezone for the class and application.
      *
      * @param string|null $timeZone The timezone to set.
+     *
      * @return string The updated timezone.
      */
     private function _setTimeZone(string $timeZone)
@@ -25,7 +26,7 @@ trait TimeZone
         $this->timeZone = $timeZone;
 
         // If the initializer is "Today," update the date property
-        if ($this->initializer == "Today") {
+        if ($this->initializer == 'Today') {
             $this->date = Carbon::today($this->timeZone)->format('Y-m-d');
         }
 
