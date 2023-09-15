@@ -141,7 +141,7 @@ $nameSpanish = Calendar::date('2023-09-10')->getNameDaySpanish(); //"Domingo"
 
 // Obtener el nombre del mes en español o inglés.
 $nameEnglish = Calendar::date('2023-09-10')->getNameMonthEnglish(): //"September"
-$nameSpanish = Calendar::date('2023-09-10')->getNameDaySpanish(); //"Septiembre"
+$nameSpanish = Calendar::date('2023-09-10')->getNameMonthSpanish(); //"Septiembre"
 
 // Obtener la fecha como un arreglo.
 $dateInArray = Calendar::date('2023-09-10')->toArray();
