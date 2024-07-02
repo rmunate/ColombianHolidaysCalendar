@@ -1,10 +1,10 @@
 {
     "name": "rmunate/calendario-colombia",
-    "description": "Este paquete simplifica el trabajo con las fechas festivas de Colombia. Con dos clases especializadas, podrás realizar tareas complejas en tus proyectos, como verificar si una fecha es festiva, determinar si un año es bisiesto o contar los festivos en un intervalo de fechas.",
+    "description": "This package simplifies working with Colombian holidays. It provides an easy, reliable, and convenient way to query, manipulate, or retrieve data related to holidays in Colombia, including detailed information about the reasons for each holiday.",
     "keywords": [
         "colombia",
         "calendar",
-        "calendario",
+        "holidays",
         "festivos",
         "feriados",
         "rmunate"
@@ -14,7 +14,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Rmunate\\Calendario\\": "src/"
+            "Rmunate\\Calendar\\": "src/"
         }
     },
     "authors": [
@@ -27,16 +27,17 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "rmunate/laravel-config-runtime": "^1.0",
-        "rmunate/php-config-runtime": "^1.0",
-        "nesbot/carbon": "^2.0",
-        "illuminate/support": "^8.0|^9.0|^10.0"
+        "ext-sqlite3": "*",
+        "ext-pdo_sqlite": "*",
+        "nesbot/carbon": "^2.72.2|^3.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0"
     },
     "require-dev": {
-        
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.4|^11.0"
     },
-    "extra" : {
-        "branch-alias" : {
+    "extra": {
+        "branch-alias": {
             "dev-main": "v2.0.x-dev"
         }
     },

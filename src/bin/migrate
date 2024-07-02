@@ -1,0 +1,9 @@
+<?php
+
+use Rmunate\Calendar\Database\DatabaseManager;
+
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+$migrateDataToSQLite = new DatabaseManager();
+$migrateDataToSQLite->createSchema();
+$migrateDataToSQLite->executeSeeder();
