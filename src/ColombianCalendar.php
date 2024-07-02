@@ -3,8 +3,8 @@
 namespace Rmunate\Calendar;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class Colombia
 {
@@ -17,10 +17,10 @@ class Colombia
     {
         // Dynamically configure the ad-hoc SQLite connection
         Config::set('database.connections.db_colombiancalendar', [
-            'driver' => 'sqlite',
-            'database' => dirname(__FILE__) . "/Database/SQLite/Holidays.db",
-            'prefix' => '',
-            'foreign_key_constraints' => true
+            'driver'                  => 'sqlite',
+            'database'                => dirname(__FILE__).'/Database/SQLite/Holidays.db',
+            'prefix'                  => '',
+            'foreign_key_constraints' => true,
         ]);
 
         // Use Laravel's Query Builder on the ad-hoc connection
@@ -44,7 +44,8 @@ class Colombia
      * Filter records by a specific column and value.
      *
      * @param string $column The column to filter by.
-     * @param mixed $value The value to compare.
+     * @param mixed  $value  The value to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function where(...$values)
@@ -56,7 +57,8 @@ class Colombia
      * Filter records by a specific column and value, excluding matches.
      *
      * @param string $column The column to filter by.
-     * @param mixed $value The value to compare.
+     * @param mixed  $value  The value to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereNot(...$values)
@@ -68,7 +70,8 @@ class Colombia
      * Filter records by a specific column and value within an array.
      *
      * @param string $column The column to filter by.
-     * @param array $values The values to compare.
+     * @param array  $values The values to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereIn(...$values)
@@ -80,7 +83,8 @@ class Colombia
      * Filter records by a specific column and value outside an array.
      *
      * @param string $column The column to filter by.
-     * @param array $values The values to compare.
+     * @param array  $values The values to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereNotIn(...$values)
@@ -92,7 +96,8 @@ class Colombia
      * Filter records by a specific column and value range.
      *
      * @param string $column The column to filter by.
-     * @param array $values The range values to compare.
+     * @param array  $values The range values to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereBetween(...$values)
@@ -104,7 +109,8 @@ class Colombia
      * Filter records by a specific column and value range excluding the range.
      *
      * @param string $column The column to filter by.
-     * @param array $values The range values to compare.
+     * @param array  $values The range values to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereNotBetween(...$values)
@@ -116,7 +122,8 @@ class Colombia
      * Filter records by a specific date.
      *
      * @param string $column The column to filter by.
-     * @param mixed $value The value to compare.
+     * @param mixed  $value  The value to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereDate(...$values)
@@ -128,7 +135,8 @@ class Colombia
      * Filter records by a specific month.
      *
      * @param string $column The column to filter by.
-     * @param mixed $value The value to compare.
+     * @param mixed  $value  The value to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereMonth(...$values)
@@ -140,7 +148,8 @@ class Colombia
      * Filter records by a specific day.
      *
      * @param string $column The column to filter by.
-     * @param mixed $value The value to compare.
+     * @param mixed  $value  The value to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereDay(...$values)
@@ -152,7 +161,8 @@ class Colombia
      * Filter records by a specific year.
      *
      * @param string $column The column to filter by.
-     * @param mixed $value The value to compare.
+     * @param mixed  $value  The value to compare.
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     public static function whereYear(...$values)
@@ -184,6 +194,7 @@ class Colombia
      * Check if a given date is a holiday.
      *
      * @param string $date The date in Y-m-d format.
+     *
      * @return bool True if it's a holiday, False otherwise.
      */
     public static function isHoliday(string $date)
@@ -200,6 +211,7 @@ class Colombia
      * Get the description of the holiday if the date is a holiday.
      *
      * @param string $date The date in Y-m-d format.
+     *
      * @return string|null The description of the holiday, or null if it's not a holiday.
      */
     public static function getDescriptionIfHoliday(string $date)
