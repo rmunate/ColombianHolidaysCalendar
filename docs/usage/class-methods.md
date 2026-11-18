@@ -1,101 +1,74 @@
 ---
-title: Métodos de Clase
-editLink: true
-outline: deep
+title: Consultas
 ---
 
-## Métodos Estáticos Únicos
+# Consultas
 
-Este paquete te ofrece dos métodos simples para determinar los datos relevantes sobre la validación de días festivos en Colombia.
-
-### Validar si una fecha es festiva
-
-Con el método `isHoliday` y pasando una fecha en el formato indicado, puedes determinar si la fecha es o no festiva en el calendario colombiano.
+## Consultar una fecha
 
 ```php
 use Rmunate\Calendar\Colombia;
 
-$isHoliday = Colombia::isHoliday('2024-01-01');
-// true
+Colombia::isHoliday('2026-07-13');             // true
+Colombia::getDescriptionIfHoliday('2026-07-13');
+// 'Día de Nuestra Señora del Rosario de Chiquinquirá'
 
-$isHoliday = Colombia::isHoliday('2024-03-01');
-// false
+Colombia::isHoliday('2026-07-09');             // false: el descanso se trasladó
+Colombia::getDescriptionIfHoliday('2026-07-09'); // null
+
+Colombia::getDescriptionIfHoliday('2026-07-12');
+// 'Día Domingo Festivo'
 ```
 
-### Conocer el motivo de un día festivo
+Se recomienda pasar fechas en formato `Y-m-d` para que la consulta no dependa de la hora de ejecución. También se aceptan fechas válidas interpretadas por Carbon: se usa `config('app.timezone')` cuando la entrada no incluye una zona horaria. Las fechas vacías o inválidas generan `Carbon\Exceptions\InvalidFormatException`.
 
-Usando el método `getDescriptionIfHoliday` y pasando una fecha en el formato indicado, puedes obtener el motivo por el cual un día es festivo, siempre y cuando lo sea. Si no es festivo, se retornará un valor nulo.
+`false` o `null` significan que no hay una fila para esa fecha. Esto incluye los días ordinarios **y** las fechas fuera de la [cobertura](../getting-started/introduction.md#cobertura-del-calendario).
+
+## Listar y filtrar
+
+`Colombia::all()` devuelve una `Illuminate\Support\Collection` de registros en orden cronológico. `Colombia::query()` devuelve un `Illuminate\Database\Query\Builder` nuevo sobre la base de solo lectura.
 
 ```php
-use Rmunate\Calendar\Colombia;
+// Solo festivos nacionales de 2026, incluidos los que caen en domingo.
+$festivos = Colombia::where('year', 2026)
+    ->whereNot('holiday_reason', 'Día Domingo Festivo')
+    ->orderBy('full_date')
+    ->get();
 
-$description = Colombia::getDescriptionIfHoliday('2024-01-01');
-// 'Año nuevo'
+// Incluye los extremos del rango y los domingos.
+$semanaSanta = Colombia::whereBetween('full_date', ['2026-04-02', '2026-04-05'])
+    ->orderBy('full_date')
+    ->pluck('full_date');
 
-$description = Colombia::getDescriptionIfHoliday('2024-03-01');
-// null
+// Encuentra un motivo aunque coincida con otro.
+$sagradoCorazon = Colombia::query()
+    ->where('holiday_reason', 'like', '%Sagrado Corazón de Jesús%')
+    ->orderBy('full_date')
+    ->get();
 ```
 
-### Obtener todos los días festivos disponibles
+| Método estático | Ejemplo | Uso |
+| --- | --- | --- |
+| `where`, `whereNot` | `Colombia::where('year', '>=', 2026)` | Aplica o niega una condición. |
+| `whereIn`, `whereNotIn` | `Colombia::whereIn('year', [2025, 2026])` | Incluye o excluye una lista de valores. |
+| `whereBetween`, `whereNotBetween` | `Colombia::whereBetween('month', [6, 8])` | Incluye o excluye un rango con sus extremos. |
+| `whereDate` | `Colombia::whereDate('full_date', '2026-07-13')` | Compara una fecha. |
+| `whereYear`, `whereMonth`, `whereDay` | `Colombia::whereMonth('full_date', 7)` | Compara una parte de la fecha. |
 
-Si deseas obtener todos los días festivos disponibles en el paquete, tu mejor opción es el método `all()`. Esto retornará una colección de Laravel (`\Illuminate\Support\Collection`) con toda la data lista para que apliques los filtros o tratamientos que necesites.
+Estos métodos devuelven un Query Builder: añade `get()`, `first()`, `exists()`, `count()` o el método de consulta que necesites. Si el orden importa, usa `orderBy('full_date')`.
 
-```php
-use Rmunate\Calendar\Colombia;
+La consulta selecciona las columnas públicas de forma predeterminada. Para obtener un solo valor con `value()`, selecciona antes la columna, por ejemplo `->select('full_date')->value('full_date')`.
 
-$all_holidays = Colombia::all();
-```
+## Columnas públicas
 
-## Ejecutar consultas específicas
+| Columna | Tipo y contenido |
+| --- | --- |
+| `year`, `month`, `day` | Enteros: año, mes (1–12) y día (1–31). |
+| `full_date` | Texto en formato `YYYY-MM-DD`. |
+| `day_name`, `month_name` | Nombres del día de la semana y del mes en inglés. |
+| `iso_day` | Día ISO de la semana: lunes = 1, domingo = 7. |
+| `iso_week` | Semana ISO (1–53). |
+| `day_of_year` | Día ordinal (1–365 o 1–366 en años bisiestos). |
+| `holiday_reason` | Motivo en español. Si coinciden dos festivos, ambos aparecen separados por ` / `. |
 
-Es posible que necesites realizar consultas específicas. Con este paquete puedes aplicar cualquier condición que te sea conveniente a los valores disponibles.
-
-Columnas de la tabla:
-- **day**: Número del día (numérico)
-- **month**: Número del mes (numérico)
-- **year**: Número del año (numérico)
-- **day_name**: Nombre del día en inglés (texto)
-- **month_name**: Nombre del mes en inglés (texto)
-- **full_date**: Fecha completa en formato YYYY-MM-DD
-- **iso_day**: Número ISO del día (numérico)
-- **iso_week**: Número ISO de la semana (numérico)
-- **day_of_year**: Día dentro del año (365 días) (numérico)
-- **holiday_reason**: Motivo de que sea festivo (texto)
-
-Con esto en mente, puedes usar cualquier consulta con QueryBuilder.
-
-```php
-use Rmunate\Calendar\Colombia;
-
-$data = Colombia::where('day', 1)->where('month', 1)->get();
-$data = Colombia::where('year', 2024)->where('month', 7)->get();
-$data = Colombia::where('full_date', '2024-01-01')->first();
-$data = Colombia::where('day_of_year', '>=', 180)->where('year', 2024)->get();
-
-$data = Colombia::where('day_name', '!=', 'Sunday')->where('year', 2024)->get();
-$data = Colombia::whereNot('day_name', 'Sunday')->where('year', 2024)->get();
-
-$data = Colombia::whereIn('year', [2024, 2025])->whereIn('month', [1, 2, 3, 4, 5, 6])->get();
-$data = Colombia::whereIn('holiday_reason', ['Jueves Santo', 'Viernes Santo'])->where('year', 2024)->get();
-$data = Colombia::whereNotIn('holiday_reason', ['Jueves Santo', 'Viernes Santo'])->where('year', 2024)->get();
-
-$data = Colombia::whereBetween('full_date', ['2024-01-01', '2024-03-01'])->get();
-$data = Colombia::whereNotBetween('full_date', ['2024-01-01', '2024-03-01'])->get();
-
-$data = Colombia::whereDate('full_date', '2024-01-01')->get();
-$data = Colombia::whereMonth('full_date', '01')->get();
-$data = Colombia::whereDay('full_date', '01')->get();
-$data = Colombia::whereYear('full_date', 2024)->get();
-```
-
-En resumen, tienes tantas combinaciones como necesites. Además, el método `Colombia::query()` también está disponible en el paquete y retorna una instancia válida de `\Illuminate\Database\Query\Builder`, lo que te permite usar métodos diferentes de Query Builder que no estén listados en los ejemplos anteriores.
-
-```php
-use Rmunate\Calendar\Colombia;
-
-$data = Colombia::query()->where(function (Builder $query) {
-            $query->where('month', 3)->orWhere('month', 7);
-        });
-```
-
-Con estos métodos, puedes manejar y consultar los días festivos de Colombia de manera eficiente y flexible. ¡Aprovecha todas las posibilidades que este paquete te ofrece!
+Estos son los tipos de SQLite. En PHP 7.4 y 8.0, PDO puede devolver las columnas numéricas como cadenas.

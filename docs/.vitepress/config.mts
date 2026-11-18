@@ -1,106 +1,64 @@
-import {defineConfig} from 'vitepress'
+import { defineConfig } from 'vitepress'
+
+/** GitHub Actions obtiene la URL de Pages; el valor local sirve para previsualizar el sitio del repositorio. */
+const base = process.env.DOCS_BASE || '/ColombianHolidaysCalendar/'
+const site = new URL(base, process.env.DOCS_ORIGIN || 'https://rmunate.github.io')
+const repository = 'https://github.com/rmunate/ColombianHolidaysCalendar'
+const description = 'Consulta los festivos nacionales y los domingos de Colombia en Laravel.'
 
 export default defineConfig({
-    title: "Festivos Colombia",
-    description: "Una manera simple, confiable y conveniente para trabajar con las fechas festivas de Colombia! 🚀",
-    lang: 'es-ES',
-    lastUpdated: false,
-    base: '/ColombianHolidaysCalendar',
+    title: 'Festivos Colombia',
+    description,
+    lang: 'es-CO',
+    base,
     themeConfig: {
         footer: {
-            message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2021-2024 Raul Mauricio Uñate'
+            message: 'Publicado bajo la licencia MIT.',
+            copyright: 'Copyright © 2023 Raúl Mauricio Uñate Castro'
         },
         editLink: {
-            pattern: 'https://github.com/rmunate/ColombianHolidaysCalendar/tree/main/docs/:path'
+            pattern: `${repository}/edit/master/docs/:path`,
+            text: 'Editar esta página en GitHub'
         },
         logo: '/img/Logo.png',
         nav: [
-            {text: 'v3.0.0', link: '/'},
+            { text: 'v4.0.0', link: '/getting-started/changelog' }
         ],
         sidebar: [
             {
-                text: 'Empezando',
-                collapsed: false,
+                text: 'Primeros pasos',
                 items: [
-                    {text: 'Introducción', link: '/getting-started/introduction'},
-                    {text: 'Instalación', link: '/getting-started/installation'},
-                    {text: 'Notas De Lanzamiento', link: '/getting-started/changelog'},
+                    { text: 'Introducción', link: '/getting-started/introduction' },
+                    { text: 'Instalación', link: '/getting-started/installation' },
+                    { text: 'Notas de lanzamiento', link: '/getting-started/changelog' }
                 ]
             }, {
                 text: 'Uso',
-                collapsed: false,
                 items: [
-                    {text: 'Consultas', link: '/usage/class-methods'},
+                    { text: 'Consultas', link: '/usage/class-methods' }
                 ]
             }, {
-                text: 'Contribute',
-                collapsed: false,
+                text: 'Colaboración',
                 items: [
-                    {text: 'Reporte De Error', link: 'contribute/report-bugs'},
-                    {text: 'Contribución', link: 'contribute/contribution'}
+                    { text: 'Reportar un error', link: '/contribute/report-bugs' },
+                    { text: 'Contribución', link: '/contribute/contribution' }
                 ]
             }
         ],
-
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/rmunate/ColombianHolidaysCalendar'}
+            { icon: 'github', link: repository }
         ],
         search: {
             provider: 'local'
         }
     },
     head: [
-        ['link', {
-                rel: 'stylesheet',
-                href: '/ColombianHolidaysCalendar/css/style.css'
-            }
-        ],
-        ['link', {
-                rel: 'icon',
-                href: '/ColombianHolidaysCalendar/img/Logo.png',
-                type: 'image/png'
-            }
-        ],
-        ['meta', {
-                property: 'og:image',
-                content: '/ColombianHolidaysCalendar/img/logo-github.png'
-            }
-        ],
-        ['meta', {
-                property: 'og:image:secure_url',
-                content: '/ColombianHolidaysCalendar/img/logo-github.png'
-            }
-        ],
-        ['meta', {
-                property: 'og:image:width',
-                content: '600'
-            }
-        ],
-        ['meta', {
-                property: 'og:image:height',
-                content: '400'
-            }
-        ],
-        ['meta', {
-                property: 'og:title',
-                content: 'Calendario Festivos Colombia'
-            }
-        ],
-        ['meta', {
-                property: 'og:description',
-                content: 'Una manera simple, confiable y conveniente para trabajar con las fechas festivas de Colombia! 🚀'
-            }
-        ],
-        ['meta', {
-                property: 'og:url',
-                content: 'https://rmunate.github.io/ColombianHolidaysCalendar/'
-            }
-        ],
-        ['meta', {
-                property: 'og:type',
-                content: 'website'
-            }
-        ],
-    ],
+        ['link', { rel: 'stylesheet', href: `${base}css/style.css` }],
+        ['link', { rel: 'icon', href: `${base}img/Logo.png`, type: 'image/png' }],
+        ['meta', { property: 'og:image', content: new URL('img/logo-github.png', site).href }],
+        ['meta', { property: 'og:title', content: 'Calendario de Festivos de Colombia' }],
+        ['meta', { property: 'og:description', content: description }],
+        ['meta', { property: 'og:url', content: site.href }],
+        ['meta', { property: 'og:type', content: 'website' }]
+    ]
 })

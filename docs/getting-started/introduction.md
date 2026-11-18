@@ -1,54 +1,20 @@
 ---
-title: Introduction
-editLink: true
-outline: deep
+title: Introducción
 ---
 
-![logo-spell-number](/img/logo-full-scream.png)
+# Calendario de Festivos de Colombia
 
-## Introducción
+![Calendario de Festivos de Colombia](/img/logo-full-scream.png)
 
-Este paquete fue desarrollado con el propósito de ofrecer una solución sencilla, fácil y conveniente para trabajar con las fechas festivas de Colombia. En numerosos sistemas empresariales, como ERP, CRM y aplicaciones de gestión de calendarios, es crucial determinar si una fecha específica es festiva, calcular la cantidad de días festivos entre períodos de tiempo, y más.
+El paquete permite consultar si un día es festivo, conocer su motivo y realizar búsquedas por rangos o partes de una fecha con el Query Builder de Laravel. Todos los datos vienen incluidos en una base SQLite de solo lectura.
 
-El paquete proporciona acceso a una extensa base de datos de fechas festivas sin la necesidad de depender de APIs externas o almacenar grandes volúmenes de datos adicionales en la base de datos principal del sistema. Esto asegura un manejo eficiente y directo de la información requerida.
+## Cobertura del calendario
 
-Con esta herramienta, los desarrolladores pueden integrar fácilmente la funcionalidad de calendario colombiano en sus aplicaciones, mejorando la precisión y la eficiencia del manejo de fechas festivas sin complicaciones adicionales.
+- Desde el **1 de enero de 2000** hasta el **31 de diciembre de 2100**, inclusive.
+- Festivos nacionales según la [Ley 51 de 1983](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4954). La base incluye las fechas observadas de descanso, con el traslado al lunes para los días a los que aplica.
+- Nuestra Señora del Rosario de Chiquinquirá desde 2026, según el artículo 6 de la [Ley 2578 de 2026](https://lector.ramajudicial.gov.co/SIDN/NORMATIVA/TEXTOS_COMPLETOS/7_LEYES/LEYES%202026/Ley%202578%20de%202026.pdf). El primer descanso se observó el lunes **13 de julio de 2026**.
+- También incluye todos los domingos, como en la versión anterior. Si un festivo nacional cae en domingo, se conserva su motivo nacional.
 
-# Instalación
+Cada fecha tiene una sola fila. Si coinciden dos festivos nacionales, el motivo incluye ambos. Las fechas futuras se calculan con las leyes indicadas: el paquete no sigue cambios normativos en tiempo real ni incluye festivos locales, jornadas cívicas extraordinarias o calendarios de cada empleador.
 
-## Requisitos
-
-Para asegurar el funcionamiento adecuado de este paquete en tu proyecto, asegúrate de cumplir con los siguientes requisitos:
-
-- **Versión de Laravel:** 9.0 o superior.
-- **Versión de PHP:** 7.4 o superior.
-
-Además, en tu configuración `php.ini`, asegúrate de tener las siguientes extensiones habilitadas:
-- `extension=sqlite3`
-- `extension=pdo_sqlite`
-
-Estas extensiones son fundamentales ya que permiten un manejo eficiente de los datos en SQLite para el calendario de Colombia, asegurando un rendimiento óptimo sin un consumo excesivo de memoria.
-
-## Instalación
-
-### Composer
-
-Para instalar este paquete, ejecuta el siguiente comando de Composer:
-
-```bash
-composer require rmunate/calendario-colombia
-```
-
-Composer se encargará de descargar la versión más reciente compatible (3.0 o superior).
-
-## Licencia
-
-Este proyecto está bajo la [Licencia MIT](https://choosealicense.com/licenses/mit/).
-
-🌟 ¡Apoya Mis Proyectos! 🚀
-
-[![Conviértete en Patrocinador](https://img.shields.io/badge/-Conviértete%20en%20Patrocinador-blue?style=for-the-badge&logo=github)](https://github.com/sponsors/rmunate)
-
-Haz cualquier contribución que consideres adecuada; el código es completamente tuyo. Juntos, podemos hacer cosas increíbles y mejorar el mundo del desarrollo. Tu apoyo es invaluable. ✨
-
-¡Si tienes ideas, sugerencias o simplemente quieres colaborar, estamos abiertos a todo! Únete a nuestra comunidad y sé parte de nuestro camino hacia el éxito! 🌐👩‍💻👨‍💻
+Continúa con la [instalación](./installation.md) o consulta los [ejemplos de uso](../usage/class-methods.md).

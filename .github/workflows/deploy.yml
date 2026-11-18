@@ -1,62 +1,114 @@
-name: Deploy VitePress site to Pages
+name: Verify release and deploy documentation
 
 on:
-    push:
-        branches: [ master ]
+  pull_request:
+  push:
+    branches: [master]
+    tags: ['v*']
+  workflow_dispatch:
 
-    # Allows you to run this workflow manually from the Actions tab
-    workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+  contents: read
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Serialize runs for master so an older build cannot deploy after a newer one.
 concurrency:
-    group: pages
-    cancel-in-progress: false
+  group: calendar-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
-    # Build job
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v3
-                with:
-                    fetch-depth: 0 # Not needed if lastUpdated is not enabled
-            # - uses: pnpm/action-setup@v2 # Uncomment this if you're using pnpm
-            # - uses: oven-sh/setup-bun@v1 # Uncomment this if you're using Bun
-            -   name: Setup Node
-                uses: actions/setup-node@v3
-                with:
-                    node-version: 18
-                    cache: npm # or pnpm / yarn
-            -   name: Setup Pages
-                uses: actions/configure-pages@v3
-            -   name: Install dependencies
-                run: npm ci # or pnpm install / yarn install / bun install
-            -   name: Build with VitePress
-                run: |
-                    npm run docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
-                    touch docs/.vitepress/dist/.nojekyll
-            -   name: Upload artifact
-                uses: actions/upload-pages-artifact@v2
-                with:
-                    path: docs/.vitepress/dist
+  tests:
+    name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { php: '7.4', laravel: '8' }
+          - { php: '8.0', laravel: '9' }
+          - { php: '8.1', laravel: '10' }
+          - { php: '8.2', laravel: '11' }
+          - { php: '8.2', laravel: '12' }
+          - { php: '8.3', laravel: '13' }
+          - { php: '8.4', laravel: '13' }
+          - { php: '8.5', laravel: '13' }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: calendar, fileinfo, mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - name: Validate Composer manifest
+        run: composer validate --strict --no-check-lock
+      # Use the full framework on supported releases and the relevant Illuminate components on legacy releases.
+      - name: Select Laravel version
+        env:
+          LARAVEL: ${{ matrix.laravel }}
+        run: |
+          composer require --no-interaction --no-update "illuminate/database:^${LARAVEL}.0" "illuminate/support:^${LARAVEL}.0"
+          if [[ "$LARAVEL" == "12" || "$LARAVEL" == "13" ]]; then
+            composer require --dev --no-interaction --no-update "laravel/framework:^${LARAVEL}.0"
+          fi
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist --no-progress
+      - name: Verify SQLite
+        run: composer calendar:check
+      - name: Run integration tests
+        run: composer test
 
-    # Deployment job
-    deploy:
-        environment:
-            name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
-        needs: build
-        runs-on: ubuntu-latest
-        name: Deploy
-        steps:
-            -   name: Deploy to GitHub Pages
-                id: deployment
-                uses: actions/deploy-pages@v2
+  build:
+    name: Build VitePress
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Read Pages configuration
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Install dependencies
+        run: npm ci
+      - name: Build documentation
+        env:
+          DOCS_BASE: ${{ steps.pages.outcome == 'success' && format('{0}/', steps.pages.outputs.base_path) || '/ColombianHolidaysCalendar/' }}
+          DOCS_ORIGIN: ${{ steps.pages.outputs.origin }}
+        run: npm run docs:build
+      - name: Upload Pages artifact
+        if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    needs: [tests, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

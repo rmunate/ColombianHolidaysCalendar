@@ -1,31 +1,25 @@
 ---
-title: Installation
-editLink: true
-outline: deep
+title: Instalación
 ---
+
 # Instalación
 
 ## Requisitos
 
-Para asegurar el funcionamiento adecuado de este paquete en tu proyecto, asegúrate de cumplir con los siguientes requisitos:
+- **Laravel 8, 9, 10, 11, 12 o 13**. Se admiten las actualizaciones menores y de parche de estas ramas. Las versiones mayores posteriores se validarán por separado.
+- **PHP 7.4 o 8.x**, respetando los requisitos de tu versión de Laravel. Laravel 13 requiere como mínimo [PHP 8.3](https://laravel.com/docs/13.x/releases#php-8).
+- Las extensiones PHP `PDO` y `pdo_sqlite` habilitadas. La extensión `sqlite3` no es necesaria.
 
-- **Versión de Laravel:** 9.0 o superior.
-- **Versión de PHP:** 7.4 o superior.
+## Instalar o actualizar a 4.0.0
 
-Además, en tu configuración `php.ini`, asegúrate de tener las siguientes extensiones habilitadas:
-- `extension=sqlite3`
-- `extension=pdo_sqlite`
+Desde la raíz de tu aplicación Laravel:
 
-Estas extensiones son fundamentales ya que permiten un manejo eficiente de los datos en SQLite para el calendario de Colombia, asegurando un rendimiento óptimo sin un consumo excesivo de memoria.
-
-## Instalación
-
-### Composer
-
-Para instalar este paquete, ejecuta el siguiente comando de Composer:
-
-```bash
-composer require rmunate/calendario-colombia
+```shell
+composer require "rmunate/calendario-colombia:^4.0"
 ```
 
-Composer se encargará de descargar la versión más reciente compatible (3.0 o superior).
+No debes ejecutar migraciones ni registrar un proveedor de servicios. El paquete abre su archivo SQLite en modo de solo lectura con una conexión separada de las de Laravel. No usa ni cambia tu conexión por defecto.
+
+Si Composer reporta que falta `pdo_sqlite`, habilita la extensión en la configuración de PHP utilizada por Composer y por la aplicación. Puedes comprobar qué archivo de configuración usa la CLI con `php --ini` y qué módulos están cargados con `php -m`.
+
+Si vienes de la versión 3, revisa los [cambios de comportamiento y migración](./changelog.md).

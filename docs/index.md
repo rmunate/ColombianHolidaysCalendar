@@ -4,10 +4,10 @@ layout: home
 hero:
   name: Calendario
   text: Festivos Colombia
-  tagline: Una manera simple, confiable y conveniente para trabajar con las fechas festivas de Colombia! 🚀
+  tagline: Festivos nacionales y domingos de Colombia en Laravel, del 2000 al 2100.
   image:
     src: /img/Logo.png
-    alt: AgentDetection
+    alt: Calendario de Festivos de Colombia
   actions:
     - theme: brand
       text: Empezar
@@ -18,11 +18,11 @@ hero:
 
 features:
   - icon: 📅
-    title: Sin Dependencias Externas
-    details: Sin necesidad de APIs y sin la creación de tablas en tu base de datos con la información de los días festivos de Colombia.
+    title: Sin servicios externos
+    details: El calendario viene en SQLite; no necesitas APIs ni migraciones en la base de datos de tu aplicación.
   - icon: 🌐
-    title: Detalle del Evento
-    details: No solo puedes determinar si es un día festivo, sino también validar el motivo y más detalles.
+    title: Motivos y fechas observadas
+    details: Consulta el motivo del festivo y la fecha efectiva de descanso, incluidos los traslados al lunes.
   - icon: 🛠️
     title: Query Builder
-    details: Tú decides qué valores consultar utilizando el Query Builder de Laravel para realizar consultas personalizadas.
+    details: Filtra fechas y rangos con el Query Builder de Laravel 8 a 13.

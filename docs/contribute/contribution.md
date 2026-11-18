@@ -1,7 +1,5 @@
 ---
-title: Contributing
-editLink: true
-outline: deep
+title: Contribución
 ---
 
 <script setup>
@@ -25,7 +23,35 @@ const members = [
 
 # Contribuciones
 
-Si deseas desarrollar nuevas funcionalidades, puedes enviar tus solicitudes a la rama principal del repositorio.
+Crea tu rama a partir de `master` y abre un pull request con los cambios, las pruebas y la documentación que correspondan.
+
+## Verificar cambios
+
+Para desarrollar la biblioteca, habilita también la extensión PHP `calendar`, usada para calcular la fecha de Pascua en la generación de datos.
+
+```shell
+composer install
+composer test
+composer calendar:check
+```
+
+El generador es la fuente de las reglas y no se ejecuta en las aplicaciones consumidoras. Cuando cambie una norma o la cobertura, actualiza el generador y prueba las fechas afectadas. Luego ejecuta `composer calendar:build` e incluye el archivo SQLite regenerado en el pull request. `composer calendar:check` verifica la integridad y compara el contenido, no los bytes, con una base recién generada.
+
+Para la documentación usa Node.js 24:
+
+```shell
+npm ci
+npm run docs:dev
+npm run docs:build
+```
+
+El sitio usa VitePress 1.x con una versión corregida de Vite 6 fijada mediante `overrides`. Al actualizar VitePress, comprueba si el reemplazo sigue siendo necesario.
+
+## Desplegar y publicar
+
+1. En GitHub, configura **Settings → Pages → Build and deployment → Source → GitHub Actions**. Si el entorno `github-pages` usa reglas de despliegue, asegúrate de que permitan `master`.
+2. Al integrar cambios en `master`, el flujo **Verify release and deploy documentation** ejecuta las pruebas en la matriz de PHP y Laravel, verifica SQLite y compila el sitio. Solo publica cuando pasan las verificaciones. También se puede ejecutar manualmente desde `master`. Los pull requests y las etiquetas ejecutan las verificaciones, pero no publican en Pages.
+3. Para publicar el paquete, crea la etiqueta `v4.0.0` sobre el commit verificado y sincroniza la versión en [Packagist](https://packagist.org/packages/rmunate/calendario-colombia). Composer obtiene la versión de la etiqueta, no de un campo `version` en el manifiesto.
 
 ## Contribuidores
 
@@ -35,13 +61,4 @@ A quienes agradecemos por apoyar haciendo la programación más fácil.
 
 <VPTeamMembers size="small" :members="members" />
 
-## Licencia
-Este proyecto está bajo la [Licencia MIT](https://choosealicense.com/licenses/mit/).
-
-🌟 ¡Apoya Mis Proyectos! 🚀
-
-[![Conviértete en Patrocinador](https://img.shields.io/badge/-Conviértete%20en%20Patrocinador-blue?style=for-the-badge&logo=github)](https://github.com/sponsors/rmunate)
-
-Haz cualquier contribución que consideres adecuada; el código es completamente tuyo. Juntos, podemos hacer cosas increíbles y mejorar el mundo del desarrollo. Tu apoyo es invaluable. ✨
-
-¡Si tienes ideas, sugerencias o simplemente quieres colaborar, estamos abiertos a todo! Únete a nuestra comunidad y sé parte de nuestro camino hacia el éxito! 🌐👩‍💻👨‍💻
+Contribuciones bajo la [licencia MIT](https://github.com/rmunate/ColombianHolidaysCalendar/blob/master/LICENSE.md). Puedes [patrocinar el proyecto en GitHub](https://github.com/sponsors/rmunate).
