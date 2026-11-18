@@ -5,7 +5,6 @@ declare(strict_types=1);
 /**
  * Reconstruye y verifica el calendario SQLite distribuido con el paquete.
  */
-
 const FIRST_YEAR = 2000;
 const LAST_YEAR = 2100;
 
@@ -82,7 +81,8 @@ function buildDatabase(string $path): void
 {
     $database = new PDO('sqlite:'.$path, null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     $database->beginTransaction();
-    $database->exec(<<<'SQL'
+    $database->exec(
+        <<<'SQL'
         CREATE TABLE holidays (
             id INTEGER PRIMARY KEY,
             country TEXT NOT NULL DEFAULT 'Colombia',
@@ -99,7 +99,8 @@ function buildDatabase(string $path): void
         )
         SQL
     );
-    $insert = $database->prepare(<<<'SQL'
+    $insert = $database->prepare(
+        <<<'SQL'
         INSERT INTO holidays (year, month, day, full_date, day_of_year, iso_week, iso_day, holiday_reason, day_name, month_name)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         SQL

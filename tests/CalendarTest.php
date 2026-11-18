@@ -30,9 +30,9 @@ final class CalendarTest extends TestCase
 
         $app = class_exists(Application::class) ? new Application(dirname(__DIR__)) : new Container();
         $app->instance('config', new Repository([
-            'app' => ['timezone' => 'America/Bogota'],
+            'app'      => ['timezone' => 'America/Bogota'],
             'database' => [
-                'default' => 'db_colombiancalendar',
+                'default'     => 'db_colombiancalendar',
                 'connections' => [
                     'db_colombiancalendar' => ['driver' => 'sqlite', 'database' => ':memory:'],
                 ],
@@ -175,15 +175,15 @@ final class CalendarTest extends TestCase
         $row = Colombia::whereDate('full_date', $date)->first();
 
         $expected = [
-            'day' => 8,
-            'month' => 12,
-            'year' => 2024,
-            'day_name' => 'Sunday',
-            'month_name' => 'December',
-            'full_date' => $date,
-            'iso_day' => 7,
-            'iso_week' => 49,
-            'day_of_year' => 343,
+            'day'            => 8,
+            'month'          => 12,
+            'year'           => 2024,
+            'day_name'       => 'Sunday',
+            'month_name'     => 'December',
+            'full_date'      => $date,
+            'iso_day'        => 7,
+            'iso_week'       => 49,
+            'day_of_year'    => 343,
             'holiday_reason' => 'Inmaculada Concepción',
         ];
         if (PHP_VERSION_ID < 80100) {
@@ -242,6 +242,7 @@ final class CalendarTest extends TestCase
 
         $connection = Colombia::query()->getConnection();
         $connection->beginTransaction();
+
         try {
             $this->expectException(QueryException::class);
             $this->expectExceptionMessage('readonly');

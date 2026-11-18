@@ -81,10 +81,10 @@ class Colombia
     /**
      * Excluye las filas que coinciden con la condición indicada.
      *
-     * @param mixed  $column Columna, expresión, arreglo de condiciones o cierre.
+     * @param mixed  $column   Columna, expresión, arreglo de condiciones o cierre.
      * @param mixed  $operator Operador de comparación o valor si se omite el operador.
-     * @param mixed  $value Valor que se compara.
-     * @param string $boolean Conjunción SQL: `and` u `or`.
+     * @param mixed  $value    Valor que se compara.
+     * @param string $boolean  Conjunción SQL: `and` u `or`.
      */
     public static function whereNot($column, $operator = null, $value = null, string $boolean = 'and'): Builder
     {
